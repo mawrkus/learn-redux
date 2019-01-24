@@ -325,7 +325,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 - You can use the `redux-saga` middleware to build more complex asynchronous actions.
 - You can use the `redux-pack` middleware to dispatch promise-based asynchronous actions.
 
-You can even write a custom middleware to describe calls to your API, like the real world example does.
+You can even write a custom middleware (see below).
 
 ### Middlewares
 
