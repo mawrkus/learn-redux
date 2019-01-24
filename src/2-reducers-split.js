@@ -45,6 +45,5 @@ store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'DISLIKE' });
 store.dispatch({ type: 'LIKE' });
-store.dispatch({ type: 'FLAG_AS_OBSCENE' });
 store.dispatch({ type: 'ADD_COMMENT', text: 'Yey! So cool :D' });
 store.dispatch({ type: 'ADD_COMMENT', text: 'Im-pre-ssive!!!' });

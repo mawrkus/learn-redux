@@ -5,6 +5,7 @@
   "author": "mawrkus <web@sparring-partner.be>",
   "license": "MIT",
   "dependencies": {
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   }
 }

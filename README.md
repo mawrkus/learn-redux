@@ -217,31 +217,114 @@ const store = createStore(reducer);
 // ...
 ```
 
+### Action creators
+
+- An **action creator** is a (factory) function that creates an action.
+- Calling an action creator only produces an action, but does not dispatch it.
+- If an action creator needs to read the current state, perform an API call, or cause a side effect, it should return an **async action** instead of an action (see below).
+
+#### Sync
+
+actions/reactions.js:
+
+```js
+// ...
+
+const COMMENT_ACTIONS = {
+  ADD_COMMENT: 'ADD_COMMENT',
+};
+
+function addComment(text) {
+  return {
+    type: COMMENT_ACTIONS.ADD_COMMENT,
+    text,
+  };
+};
+
+// ...
+
+store.dispatch(addComment('Yey! So cool :D'));
+store.dispatch(addComment('Im-pre-ssive!!!'));
+```
+
+### Async
+
+- The base `dispatch()` function always sends **synchronously** an action to the store's reducer.
+- It expects actions to be **plain objects** ready to be consumed by the reducer.
+
+To dispatch asynchronous actions (like fetching data from an API), we use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
+
+```bash
+yarn add redux-thunk
+```
+
+```js
+const {
+  createStore,
+  applyMiddleware,
+} = require('redux');
+
+// redux-thunk >= 2.x in CommonJS environment
+const thunk = require('redux-thunk').default;
+
+// ...
+
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk),
+);
+
+// ...
+```
+
+- By using this middleware, an action creator can return a function instead of an action object.
+- The action creator becomes a **thunk** (a function that wraps an expression to delay its evaluation) and can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met.
+
+```js
+const {
+  createStore,
+  applyMiddleware,
+} = require('redux');
+
+// redux-thunk >= 2.x in CommonJS environment
+const thunk = require('redux-thunk').default;
+
+// ...
+
+const {
+  addComment,
+} = require('./actions');
+
+const addCommentAsync = (text) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(addComment(text));
+    }, 1000);
+  };
+};
+
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk),
+);
+
+// ...
+
+store.dispatch(addCommentAsync('It gets really interesting!'));
+store.dispatch(addComment('Yey! So cool :D'));
+store.dispatch(addCommentAsync('Boom.'));
+store.dispatch(addComment('Im-pre-ssive!!!'));
+```
+
 ### Middlewares
+
+TODO
 
 A middleware is a higher-order function that composes a dispatch function to return a new dispatch function. It often turns async actions into actions.
 
 Middleware is composable using function composition. It is useful for logging actions, performing side effects like routing, or turning an asynchronous API call into a series of synchronous actions.
 
 See applyMiddleware(...middlewares) for a detailed look at middleware.
-
-### Actions creators
-
-An action creator is, quite simply, a function that creates an action. Do not confuse the two terms—again, an action is a payload of information, and an action creator is a factory that creates an action.
-
-Calling an action creator only produces an action, but does not dispatch it. You need to call the store's dispatch function to actually cause the mutation. Sometimes we say bound action creators to mean functions that call an action creator and immediately dispatch its result to a specific store instance.
-
-If an action creator needs to read the current state, perform an API call, or cause a side effect, like a routing transition, it should return an async action instead of an action.
-
-### Async actions
-
-The base `dispatch()` function always synchronously sends an action to the store's reducer, along with the previous state returned by the store, to calculate a new state.
-It expects actions to be plain objects ready to be consumed by the reducer.
-
-A **middleware** wraps the base `dispatch()` function and allows it to handle async actions as well.
-It may transform, delay, ignore, or otherwise interpret actions or async actions before passing them to the next middleware.
-
-An async action is a value that is sent to a dispatching function, but is not yet ready for consumption by the reducer. It will be transformed by middleware into an action (or a series of actions) before being sent to the base dispatch() function. Async actions may have different types, depending on the middleware you use. They are often asynchronous primitives, like a Promise or a thunk, which are not passed to the reducer immediately, but trigger action dispatches once an operation has completed.
 
 ### Sagas
 
@@ -251,5 +334,6 @@ An async action is a value that is sent to a dispatching function, but is not ye
 
 - https://redux.js.org
 - https://redux-starter-kit.js.org/
+- https://github.com/reduxjs/redux-thunk
 - Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
 - Getting Started with Redux (from Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
