@@ -339,7 +339,11 @@ See applyMiddleware(...middlewares) for a detailed look at middleware.
 
 ### Sagas
 
-### React
+TODO
+
+### React integration
+
+TODO
 
 ## Resources
 
