@@ -1,6 +1,6 @@
 const { ACTIONS_FETCH } = require('../actions/fetchActions');
 
-const fetch = (state = { isFetching: false, error: null }, action) => {
+const fetch = (state = { isFetching: false }, action) => {
   switch (action.type) {
     case ACTIONS_FETCH.START:
       return {
@@ -12,7 +12,6 @@ const fetch = (state = { isFetching: false, error: null }, action) => {
       return {
         ...state,
         isFetching: false,
-        error: action.payload.error,
       };
 
     default:

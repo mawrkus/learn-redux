@@ -359,6 +359,12 @@ const store = createStore(
 // ...
 ```
 
+#### Types of middlewares
+
+- All actions (logging, ...)
+- All with flag (throttle, analytics, ...)
+- One type (fetch, ...)
+
 ### Sagas
 
 TODO

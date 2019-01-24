@@ -8,13 +8,19 @@ const {
 const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   const { type, payload } = action;
 
-  if (type !== ACTIONS_FETCH.FETCH) {
+  if (type !== ACTIONS_FETCH.FETCH_REQUEST) {
     return next(action);
   }
 
-  const { method = 'GET', url, successAction, errorAction } = payload;
+  const {
+    method = 'GET',
+    url,
+    msg,
+    successAction,
+    errorAction,
+  } = payload;
 
-  dispatch(fetchStart({ method, url }));
+  dispatch(fetchStart({ msg }));
 
   try {
     const { data } = await axios.request({

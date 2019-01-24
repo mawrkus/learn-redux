@@ -1,5 +1,5 @@
 const ACTIONS_COMMENTS = {
-  ADD: Symbol('add'),
+  ADD: Symbol('add comment'),
 };
 
 const addComment = (text) => {

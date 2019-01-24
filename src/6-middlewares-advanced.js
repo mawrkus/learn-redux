@@ -18,7 +18,8 @@ const {
   dislike,
   addComment,
   addCommentAsync,
-  fetch,
+  fetchUsers,
+  fetchUser,
 } = require('./actions');
 
 const store = createStore(
@@ -35,21 +36,6 @@ console.log('___________________________________________________________________
 console.log('Demo #6: middlewares advanced');
 console.log('__________________________________________________________________________________');
 
-store.dispatch(fetch({
-  url: 'https://jsonplaceholder.typicode.com/users?_limit=3',
-  successAction: users => ({ type: 'USERS_DISPLAY', users }),
-}));
-
-store.dispatch(fetch({
-  url: 'https://jsonplaceholder.typicode.com/users/10',
-  successAction: user => ({ type: 'USER_DISPLAY', user }),
-}));
-
-store.dispatch(fetch({
-  url: 'https://jsonplaceholder.typicode.com/users/42', // does not exist
-  successAction: user => ({ type: 'USER_DISPLAY', user }),
-  errorAction: ({ method, url, error }) => ({
-    type: 'ERRORS_DISPLAY',
-    error: `${method} ${url} -> ${error}`,
-  }),
-}));
+store.dispatch(fetchUsers({ limit: 3 }));
+store.dispatch(fetchUser({ id: 10 }));
+store.dispatch(fetchUser({ id: 42 })); // does not exist

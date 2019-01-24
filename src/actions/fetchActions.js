@@ -1,20 +1,8 @@
 const ACTIONS_FETCH = {
-  FETCH: Symbol('fetch'),
-  START: Symbol('start'),
-  END: Symbol('end'),
+  FETCH_REQUEST: Symbol('fetch request'),
+  START: Symbol('fetch start'),
+  END: Symbol('fetch end'),
 };
-
-const fetch = ({ url, successAction, errorAction }) => {
-  return {
-    type: ACTIONS_FETCH.FETCH,
-    payload: {
-      url,
-      successAction,
-      errorAction,
-    },
-  };
-};
-
 const fetchStart = ({ method, url }) => {
   return {
     type: ACTIONS_FETCH.START,
@@ -39,7 +27,6 @@ const fetchEnd = ({ method, url, data, error }) => {
 
 module.exports = {
   ACTIONS_FETCH,
-  fetch,
   fetchStart,
   fetchEnd,
 };
