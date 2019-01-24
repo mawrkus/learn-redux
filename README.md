@@ -118,9 +118,7 @@ store.dispatch({ type: 'DISLIKE' });
 store.dispatch({ type: 'LIKE' });
 ```
 
-## Best practices
-
-### Scaling
+#### Multiple reducers
 
 As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and combine them.
 
