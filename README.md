@@ -225,7 +225,7 @@ const store = createStore(reducer);
 
 #### Sync actions
 
-actions/reactions.js:
+actions/comments.js:
 
 ```js
 // ...
