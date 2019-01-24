@@ -1,12 +1,14 @@
 # Redux
 
-https://redux.js.org/
+<img style="float:left; margin:0 12px;height:64px;" src="./img/redux-logo.png" alt="Redux logo">
 
-> Redux is a predictable state container for JavaScript apps.
+Redux is a predictable state container for JavaScript apps.
+
+https://redux.js.org
 
 ## Installation
 
-From scratch:
+From scratch (https://www.npmjs.com/package/redux):
 
 ```bash
 yarn add redux
@@ -266,13 +268,13 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const thunk = require('redux-thunk').default;
+const ReduxThunk = require('redux-thunk').default;
 
 // ...
 
 const store = createStore(
   reducer,
-  applyMiddleware(thunk),
+  applyMiddleware(ReduxThunk),
 );
 
 // ...
@@ -288,7 +290,7 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const thunk = require('redux-thunk').default;
+const ReduxThunk = require('redux-thunk').default;
 
 // ...
 
@@ -308,7 +310,7 @@ const addCommentAsync = (text) => {
 
 const store = createStore(
   reducer,
-  applyMiddleware(thunk),
+  applyMiddleware(ReduxThunk),
 );
 
 // ...
