@@ -4,7 +4,7 @@ const COMMENT_ACTIONS = {
 
 exports.COMMENT_ACTIONS = COMMENT_ACTIONS;
 
-exports.addComment = (text) => {
+const addComment =  (text) => {
   return {
     type: COMMENT_ACTIONS.ADD_COMMENT,
     payload: {
@@ -12,6 +12,8 @@ exports.addComment = (text) => {
     },
   };
 };
+
+exports.addComment = addComment;
 
 exports.addCommentAsync = (text, ms) => {
   return (dispatch, getState) => {
