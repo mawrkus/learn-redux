@@ -14,11 +14,11 @@ const {
   addComment,
 } = require('./actions');
 
-const addCommentAsync = (text) => {
-  return (dispatch) => {
+const addCommentAsync = (text, ms) => {
+  return (dispatch, getState) => {
     setTimeout(() => {
       dispatch(addComment(text));
-    }, 1000);
+    }, ms);
   };
 };
 
@@ -33,7 +33,7 @@ store.dispatch(like());
 store.dispatch(like());
 store.dispatch(dislike());
 store.dispatch(like());
-store.dispatch(addCommentAsync('It gets really interesting!'));
+store.dispatch(addCommentAsync('It gets really interesting!', 1000));
 store.dispatch(addComment('Yey! So cool :D'));
-store.dispatch(addCommentAsync('Boom.'));
+store.dispatch(addCommentAsync('Boom.', 720));
 store.dispatch(addComment('Im-pre-ssive!!!'));

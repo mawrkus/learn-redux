@@ -223,7 +223,7 @@ const store = createStore(reducer);
 - Calling an action creator only produces an action, but does not dispatch it.
 - If an action creator needs to read the current state, perform an API call, or cause a side effect, it should return an **async action** instead of an action (see below).
 
-#### Sync
+#### Sync actions
 
 actions/reactions.js:
 
@@ -247,7 +247,7 @@ store.dispatch(addComment('Yey! So cool :D'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
-### Async
+### Async actions
 
 - The base `dispatch()` function always sends **synchronously** an action to the store's reducer.
 - It expects actions to be **plain objects** ready to be consumed by the reducer.
@@ -295,9 +295,11 @@ const {
   addComment,
 } = require('./actions');
 
+// Function executed by the Redux Thunk middleware
 const addCommentAsync = (text) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     setTimeout(() => {
+      // We can still dispatch actions from here based on the current state
       dispatch(addComment(text));
     }, 1000);
   };
@@ -315,6 +317,15 @@ store.dispatch(addComment('Yey! So cool :D'));
 store.dispatch(addCommentAsync('Boom.'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
+
+#### More on async actions
+
+- You can use `redux-promise` or `redux-promise-middleware` to dispatch Promises instead of functions.
+- You can use `redux-observable` to dispatch Observables.
+- You can use the `redux-saga` middleware to build more complex asynchronous actions.
+- You can use the `redux-pack` middleware to dispatch promise-based asynchronous actions.
+
+You can even write a custom middleware to describe calls to your API, like the real world example does.
 
 ### Middlewares
 

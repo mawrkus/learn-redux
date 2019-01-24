@@ -11,10 +11,10 @@ exports.addComment = (text) => {
   };
 };
 
-exports.addCommentAsync = (text) => {
-  return (dispatch) => {
+exports.addCommentAsync = (text, ms) => {
+  return (dispatch, getState) => {
     setTimeout(() => {
       dispatch(addComment(text));
-    }, 1000);
+    }, ms);
   };
-}
+};
