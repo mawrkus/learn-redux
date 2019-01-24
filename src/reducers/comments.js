@@ -5,7 +5,7 @@ const comments = (state = [], action) => {
     case COMMENT_ACTIONS.ADD_COMMENT:
       return [
         ...state,
-        action.text,
+        action.payload.text,
       ];
 
     default:

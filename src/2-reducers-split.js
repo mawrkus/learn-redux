@@ -27,7 +27,7 @@ const comments = (state = [], action) => {
     case 'ADD_COMMENT':
       return [
         ...state,
-        action.text,
+        action.payload.text,
       ];
 
     default:
@@ -45,5 +45,5 @@ store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'DISLIKE' });
 store.dispatch({ type: 'LIKE' });
-store.dispatch({ type: 'ADD_COMMENT', text: 'Yey! So cool :D' });
-store.dispatch({ type: 'ADD_COMMENT', text: 'Im-pre-ssive!!!' });
+store.dispatch({ type: 'ADD_COMMENT', payload: { text: 'Yey! So cool :D' } });
+store.dispatch({ type: 'ADD_COMMENT', payload: { text: 'Im-pre-ssive!!!' } });

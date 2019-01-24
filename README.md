@@ -77,7 +77,7 @@ store.dispatch({ type: 'LIKE' });
 - It decides how every action transforms the actual state into the next state.
 - It should **never mutate the state** received, but should always return a brand new object if the state changes.
 
-A pure function is a function that returns the exact same output for given inputs, it is also be free of side-effects.
+A pure function is a function that returns the exact same output for given inputs, it is also free of side-effects.
 
 ```js
 const { createStore } = require('redux');
@@ -86,9 +86,10 @@ const { createStore } = require('redux');
   * @param {*} state Can be object, array or primitive
   * @param {Object} action
   * @param {String} action.type
+  *
+  * Remember Array.prototype.reduce((acc, value) => ...) ? ;)
 */
 function reducer(state = { likes: 0, dislikes: 0 }, action) {
-  // Remember `Array.prototype.reduce((acc, value) => ...)` ? ;)
   switch (action.type) {
     case 'LIKE':
       return {
@@ -121,7 +122,7 @@ store.dispatch({ type: 'LIKE' });
 
 ### Scaling
 
-as the app grows, split the root reducer into smaller reducers that operates independently on the different parts of the state tree and combine them.
+As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and combine them.
 
 ```js
 const { createStore } = require('redux');
@@ -150,7 +151,7 @@ const commentsReducer = (state = [], action) => {
     case 'ADD_COMMENT':
       return [
         ...state,
-        action.text,
+        action.payload.text,
       ];
 
     default:
@@ -170,7 +171,7 @@ const store = createStore(reducer);
 // ...
 ```
 
-Using built-in `combineReducers()`:
+Redux provides the built-in function `combineReducers()`:
 
 ```js
 const {
@@ -202,7 +203,7 @@ const comments = (state = [], action) => {
     case 'ADD_COMMENT':
       return [
         ...state,
-        action.text,
+        action.payload.text,
       ];
 
     default:
@@ -220,8 +221,8 @@ const store = createStore(reducer);
 ### Action creators
 
 - An **action creator** is a (factory) function that creates an action.
-- Calling an action creator only produces an action, but does not dispatch it.
-- If an action creator needs to read the current state, perform an API call, or cause a side effect, it should return an **async action** instead of an action (see below).
+- Calling an action creator only produces an action, it does not dispatch it.
+- If an action creator needs to read the current state, to perform an API call, or to cause a side effect, it should return an **async action** instead of an action (see below).
 
 #### Sync actions
 
@@ -237,7 +238,9 @@ const COMMENT_ACTIONS = {
 function addComment(text) {
   return {
     type: COMMENT_ACTIONS.ADD_COMMENT,
-    text,
+    payload: {
+      text,
+    },
   };
 };
 
@@ -318,14 +321,9 @@ store.dispatch(addCommentAsync('Boom.'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
-#### More on async actions
+There is a rich ecosystem of middlewares to deal with async actions: `redux-promise`, `redux-promise-middleware`, `redux-observable`, `redux-saga` (to build more complex asynchronous actions) or `redux-pack`.
 
-- You can use `redux-promise` or `redux-promise-middleware` to dispatch Promises instead of functions.
-- You can use `redux-observable` to dispatch Observables.
-- You can use the `redux-saga` middleware to build more complex asynchronous actions.
-- You can use the `redux-pack` middleware to dispatch promise-based asynchronous actions.
-
-You can even write a custom middleware (see below).
+You can even write a your own custom middlewares...
 
 ### Middlewares
 

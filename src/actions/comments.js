@@ -7,7 +7,9 @@ exports.COMMENT_ACTIONS = COMMENT_ACTIONS;
 exports.addComment = (text) => {
   return {
     type: COMMENT_ACTIONS.ADD_COMMENT,
-    text,
+    payload: {
+      text,
+    },
   };
 };
 

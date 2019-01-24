@@ -32,7 +32,9 @@ const COMMENT_ACTIONS = {
 function addComment(text) {
   return {
     type: COMMENT_ACTIONS.ADD_COMMENT,
-    text,
+    payload: {
+      text,
+    },
   };
 };
 
