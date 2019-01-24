@@ -252,7 +252,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 - The base `dispatch()` function always sends **synchronously** an action to the store's reducer.
 - It expects actions to be **plain objects** ready to be consumed by the reducer.
 
-To dispatch asynchronous actions (like fetching data from an API), we use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
+To dispatch asynchronous actions (like fetching data from an API), we can use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
 
 ```bash
 yarn add redux-thunk
