@@ -4,8 +4,8 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const ReduxThunk = require('redux-thunk').default;
-const logger = require('./middlewares/logger');
+const reduxThunkMiddleware = require('redux-thunk').default;
+const loggerMiddleware = require('./middlewares/logger');
 
 const reducer = require('./reducers');
 
@@ -19,8 +19,9 @@ const {
 const store = createStore(
   reducer,
   applyMiddleware(
-    ReduxThunk,
-    logger,
+    // Order IS important
+    reduxThunkMiddleware,
+    loggerMiddleware,
   ),
 );
 

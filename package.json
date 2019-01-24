@@ -5,7 +5,7 @@
   "author": "mawrkus <web@sparring-partner.be>",
   "license": "MIT",
   "scripts": {
-    "demos": "node src/1-basic.js && node src/2-reducers-split.js && node src/3-actions-sync.js && node src/4-actions-async.js"
+    "demos": "node src/1-basic.js && node src/2-reducers-split.js && node src/3-actions-sync.js && node src/4-actions-async.js && node src/5-middlewares.js"
   },
   "dependencies": {
     "redux": "^4.0.1",

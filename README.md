@@ -272,13 +272,13 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const ReduxThunk = require('redux-thunk').default;
+const reduxThunkMiddleware = require('redux-thunk').default;
 
 // ...
 
 const store = createStore(
   reducer,
-  applyMiddleware(ReduxThunk),
+  applyMiddleware(reduxThunkMiddleware),
 );
 
 // ...
@@ -294,7 +294,7 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const ReduxThunk = require('redux-thunk').default;
+const reduxThunkMiddleware = require('redux-thunk').default;
 
 // ...
 
@@ -314,7 +314,7 @@ const addCommentAsync = (text) => {
 
 const store = createStore(
   reducer,
-  applyMiddleware(ReduxThunk),
+  applyMiddleware(reduxThunkMiddleware),
 );
 
 // ...
@@ -331,13 +331,33 @@ You can even write a your own custom middlewares...
 
 ### Middlewares
 
-TODO
+- They provide a 3rd extension point between dispatching an action and the moment it reaches the reducer.
+- They are higher-order functions that compose a dispatch function to return a new dispatch function.
+- They are composable.
 
-A middleware is a higher-order function that composes a dispatch function to return a new dispatch function. It often turns async actions into actions.
+Some usages:
 
-Middleware is composable using function composition. It is useful for logging actions, performing side effects like routing, or turning an asynchronous API call into a series of synchronous actions.
+- logging actions
+- centralizing analytics
+- centralizing API requests
+- throttling actions
 
-See applyMiddleware(...middlewares) for a detailed look at middleware.
+```js
+// ...
+
+const store = createStore(
+  reducer,
+  applyMiddleware(
+    // Order IS important!
+    reduxThunkMiddleware,
+    middleware1,
+    middleware2,
+    middleware3,
+  ),
+);
+
+// ...
+```
 
 ### Sagas
 

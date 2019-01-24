@@ -4,7 +4,7 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const ReduxThunk = require('redux-thunk').default;
+const reduxThunkMiddleware = require('redux-thunk').default;
 
 const reducer = require('./reducers');
 
@@ -24,7 +24,7 @@ const addCommentAsync = (text, ms) => {
 
 const store = createStore(
   reducer,
-  applyMiddleware(ReduxThunk),
+  applyMiddleware(reduxThunkMiddleware),
 );
 
 store.subscribe(() => console.log('Store updated!', store.getState()));
