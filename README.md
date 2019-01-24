@@ -1,6 +1,6 @@
 # Redux
 
-<img style="float:left; margin:0 12px;height:64px;" src="./img/redux-logo.png" alt="Redux logo">
+<img style="float:right; margin:0 0 0 12px;height:64px;" src="./img/redux-logo.png" alt="Redux logo">
 
 Redux is a predictable state container for JavaScript apps.
 
@@ -32,7 +32,11 @@ yarn add redux-starter-kit
 - The only way to change the state tree is **to emit an action**, an object describing what happened.
 - To specify how the actions transform the state tree, you write **pure reducers**.
 
-Benefits:
+### Data flow
+
+![Redux data flow](./img/redux-data-flow.png);
+
+### Benefits
 
 - more predictable apps (single source of truth, unidirectional data flow)
 - traceability of every state mutations -> undo/redo is trivial (aka "time travel debugging")
