@@ -1,8 +1,8 @@
-const { COMMENT_ACTIONS } = require('../actions/comments');
+const { ACTIONS_COMMENTS } = require('../actions/commentsActions');
 
 const comments = (state = [], action) => {
   switch (action.type) {
-    case COMMENT_ACTIONS.ADD_COMMENT:
+    case ACTIONS_COMMENTS.ADD:
       return [
         ...state,
         action.payload.text,

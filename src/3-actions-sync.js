@@ -4,41 +4,17 @@ const {
 
 const reducer = require('./reducers');
 
-/* reactions actions */
-
-const REACTION_ACTIONS = {
-  LIKES: 'LIKES',
-  DISLIKES: 'DISLIKES',
-};
-
-function like() {
-  return {
-    type: REACTION_ACTIONS.LIKES,
-  };
-};
-
-function dislike() {
-  return {
-    type: REACTION_ACTIONS.DISLIKES,
-  };
-};
-
-/* comments actions */
-
-const COMMENT_ACTIONS = {
-  ADD_COMMENT: 'ADD_COMMENT',
-};
-
-function addComment(text) {
-  return {
-    type: COMMENT_ACTIONS.ADD_COMMENT,
-    payload: {
-      text,
-    },
-  };
-};
+const {
+  like,
+  dislike,
+  addComment,
+} = require('./actions');
 
 const store = createStore(reducer);
+
+console.log('__________________________________________________________________________________');
+console.log('Demo #3: sync actions');
+console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));
 

@@ -5,9 +5,15 @@
   "author": "mawrkus <web@sparring-partner.be>",
   "license": "MIT",
   "scripts": {
-    "demos": "node src/1-basic.js && node src/2-reducers-split.js && node src/3-actions-sync.js && node src/4-actions-async.js && node src/5-middlewares.js"
+    "demo:1": "node src/1-basics.js",
+    "demo:2": "node src/2-reducers-split.js",
+    "demo:3": "node src/3-actions-sync.js",
+    "demo:4": "node src/4-actions-async.js",
+    "demo:5": "node src/5-middlewares.js",
+    "demo:6": "node src/6-middlewares-advanced.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   }

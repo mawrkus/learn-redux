@@ -27,6 +27,10 @@ const store = createStore(
   applyMiddleware(reduxThunkMiddleware),
 );
 
+console.log('__________________________________________________________________________________');
+console.log('Demo #4: async actions');
+console.log('__________________________________________________________________________________');
+
 store.subscribe(() => console.log('Store updated!', store.getState()));
 
 store.dispatch(like());

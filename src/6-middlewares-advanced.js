@@ -18,6 +18,7 @@ const {
   dislike,
   addComment,
   addCommentAsync,
+  fetch,
 } = require('./actions');
 
 const store = createStore(
@@ -26,20 +27,29 @@ const store = createStore(
     // Order IS important
     reduxThunkMiddleware,
     loggerMiddleware,
+    fetchMiddleware,
   ),
 );
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #5: middlewares');
+console.log('Demo #6: middlewares advanced');
 console.log('__________________________________________________________________________________');
 
-store.subscribe(() => console.log('Store updated!', store.getState()));
+store.dispatch(fetch({
+  url: 'https://jsonplaceholder.typicode.com/users?_limit=3',
+  successAction: users => ({ type: 'USERS_DISPLAY', users }),
+}));
 
-store.dispatch(like());
-store.dispatch(like());
-store.dispatch(dislike());
-store.dispatch(like());
-store.dispatch(addCommentAsync('It gets really interesting!', 1000));
-store.dispatch(addComment('Yey! So cool :D'));
-store.dispatch(addCommentAsync('Boom.', 720));
-store.dispatch(addComment('Im-pre-ssive!!!'));
+store.dispatch(fetch({
+  url: 'https://jsonplaceholder.typicode.com/users/10',
+  successAction: user => ({ type: 'USER_DISPLAY', user }),
+}));
+
+store.dispatch(fetch({
+  url: 'https://jsonplaceholder.typicode.com/users/42', // does not exist
+  successAction: user => ({ type: 'USER_DISPLAY', user }),
+  errorAction: ({ method, url, error }) => ({
+    type: 'ERRORS_DISPLAY',
+    error: `${method} ${url} -> ${error}`,
+  }),
+}));

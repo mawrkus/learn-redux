@@ -1,14 +1,14 @@
-const { REACTION_ACTIONS } = require('../actions/reactions');
+const { ACTIONS_REACTIONS } = require('../actions/reactionsActions');
 
 const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
   switch (action.type) {
-    case REACTION_ACTIONS.LIKES:
+    case ACTIONS_REACTIONS.LIKE:
       return {
         ...state,
         likes: state.likes + 1,
       };
 
-    case REACTION_ACTIONS.DISLIKES:
+    case ACTIONS_REACTIONS.DISLIKE:
       return {
         ...state,
         dislikes: state.dislikes + 1,

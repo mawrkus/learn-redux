@@ -1,7 +1,9 @@
-const reactions = require('./reactions');
-const comments = require('./comments');
+const reactionsActions = require('./reactionsActions');
+const commentsActions = require('./commentsActions');
+const fetchActions = require('./fetchActions');
 
 module.exports = {
-  ...reactions,
-  ...comments,
+  ...reactionsActions,
+  ...commentsActions,
+  ...fetchActions,
 };

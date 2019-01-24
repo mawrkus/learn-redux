@@ -35,9 +35,13 @@ const comments = (state = [], action) => {
   }
 };
 
-const reducer = combineReducers({ reactions, comments });
 
+const reducer = combineReducers({ reactions, comments });
 const store = createStore(reducer);
+
+console.log('__________________________________________________________________________________');
+console.log('Demo #2: reducers split');
+console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));
 
