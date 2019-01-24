@@ -347,8 +347,8 @@ TODO
 
 ## Resources
 
-- https://redux.js.org
-- https://redux-starter-kit.js.org/
-- https://github.com/reduxjs/redux-thunk
+- Redux: https://redux.js.org
+- Redux Starter Kit: https://redux-starter-kit.js.org/
+- Redux Thunk Middleware: https://github.com/reduxjs/redux-thunk
 - Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
-- Getting Started with Redux (from Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
+- Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
