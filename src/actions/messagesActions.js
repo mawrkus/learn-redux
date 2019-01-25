@@ -1,5 +1,6 @@
 const ACTIONS_MESSAGES = {
-  DISPLAY: Symbol('display message'),
+  DISPLAY_INFO: Symbol('display info message'),
+  DISPLAY_ERROR: Symbol('display error message'),
 };
 
 module.exports = {

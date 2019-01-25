@@ -7,18 +7,23 @@ const ACTIONS_USERS = {
 };
 
 const fetchUsers = ({ limit }) => {
+  const url = `https://jsonplaceholder.typicode.com/users?_limit=${limit}`;
+
   return {
     type: ACTIONS_FETCH.FETCH_REQUEST,
     payload: {
-      url: `https://jsonplaceholder.typicode.com/users?_limit=${limit}`,
-      msg: {
-        label: 'Fetching users...',
-      },
-      successAction: ({ data }) => ({ type: ACTIONS_USERS.DISPLAY_LIST, users: data }),
-      errorAction: ({ method, url, error }) => ({
-        type: ACTIONS_MESSAGES.DISPLAY,
+      url,
+      msg: `Fetching ${limit} users...`,
+      successAction: ({ data }) => ({
+        type: ACTIONS_USERS.DISPLAY_LIST,
         payload: {
-          error: `${method} ${url} -> ${error}`,
+          users: data,
+        },
+      }),
+      errorAction: ({ error }) => ({
+        type: ACTIONS_MESSAGES.DISPLAY_ERROR,
+        payload: {
+          text: `GET ${url} -> ${error}`,
         },
       }),
     },
@@ -26,18 +31,23 @@ const fetchUsers = ({ limit }) => {
 };
 
 const fetchUser = ({ id }) => {
+  const url = `https://jsonplaceholder.typicode.com/users/${id}`;
+
   return {
     type: ACTIONS_FETCH.FETCH_REQUEST,
     payload: {
-      url: `https://jsonplaceholder.typicode.com/users/${id}`,
-      msg: {
-        label: 'Fetching single user...',
-      },
-      successAction: ({ data }) => ({ type: ACTIONS_USERS.DISPLAY_SINGLE, user: data }),
-      errorAction: ({ method, url, error }) => ({
-        type: ACTIONS_MESSAGES.DISPLAY,
+      url,
+      msg: `Fetching user id=${id}...`,
+      successAction: ({ data }) => ({
+        type: ACTIONS_USERS.DISPLAY_SINGLE,
         payload: {
-          error: `${method} ${url} -> ${error}`,
+          user: data,
+        },
+      }),
+      errorAction: ({ error }) => ({
+        type: ACTIONS_MESSAGES.DISPLAY_ERROR,
+        payload: {
+          text: `GET ${url} -> ${error}`,
         },
       }),
     },

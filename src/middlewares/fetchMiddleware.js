@@ -1,9 +1,10 @@
 const axios = require('axios');
+
 const {
   ACTIONS_FETCH,
   fetchStart,
   fetchEnd,
-} = require('../actions');
+} = require('../actions/fetchActions');
 
 const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   const { type, payload } = action;
@@ -20,7 +21,7 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
     errorAction,
   } = payload;
 
-  dispatch(fetchStart({ msg }));
+  dispatch(fetchStart({ method, url, msg }));
 
   try {
     const { data } = await axios.request({
@@ -31,13 +32,13 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
     dispatch(fetchEnd({ method, url, data }));
 
     if (successAction) {
-      dispatch(successAction({ method, url, data }));
+      dispatch(successAction({ data }));
     }
   } catch(error) {
     dispatch(fetchEnd({ method, url, error }));
 
     if (errorAction) {
-      dispatch(errorAction({ method, url, error }));
+      dispatch(errorAction({ error }));
     }
   }
 };
