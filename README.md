@@ -46,7 +46,7 @@ Benefits:
 
 It's an object that holds the whole state of your app.
 
-```js
+```javascript
 const { createStore } = require('redux');
 
 // TODO: define a reducer
@@ -63,7 +63,7 @@ store.getState();
 - Dispatching actions is **the only way** to mutate the internal state.
 - Each action is an **object with a type** that describes what happened.
 
-```js
+```javascript
 const { createStore } = require('redux');
 
 // TODO: define a reducer
@@ -89,7 +89,7 @@ store.dispatch({ type: 'LIKE' });
 
 A pure function is a function that returns the exact same output for given inputs, it is also free of side-effects.
 
-```js
+```javascript
 const { createStore } = require('redux');
 
 /*
@@ -134,7 +134,7 @@ store.dispatch({ type: 'LIKE' });
 
 As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and to combine them.
 
-```js
+```javascript
 const { createStore } = require('redux');
 
 const reactionsReducer = (state = { likes: 0, dislikes: 0 }, action) => {
@@ -183,11 +183,8 @@ const store = createStore(reducer);
 
 Redux provides the built-in function `combineReducers()`:
 
-```js
-const {
-  createStore,
-  combineReducers,
-} = require('redux');
+```javascript
+const { createStore, combineReducers } = require('redux');
 
 const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
   switch (action.type) {
@@ -236,7 +233,7 @@ const store = createStore(reducer);
 
 #### Sync actions
 
-```js
+```javascript
 // ...
 
 const COMMENT_ACTIONS = {
@@ -269,11 +266,8 @@ To dispatch **asynchronous actions** (like fetching data from an API), we can us
 yarn add redux-thunk
 ```
 
-```js
-const {
-  createStore,
-  applyMiddleware,
-} = require('redux');
+```javascript
+const { createStore, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
@@ -292,11 +286,8 @@ const store = createStore(
 - The action creator becomes a **thunk**, a function that wraps an expression to delay its evaluation.
 - The action creator can be used to **delay the dispatch of an action**, or to dispatch only if a certain condition is met.
 
-```js
-const {
-  createStore,
-  applyMiddleware,
-} = require('redux');
+```javascript
+const { createStore, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
@@ -348,7 +339,7 @@ Some usages:
 - centralizing API requests
 - throttling actions
 
-```js
+```javascript
 // ...
 
 const loggerMiddleware = ({ getState, dispatch }) => next => action => {
@@ -373,7 +364,7 @@ const store = createStore(
 
 A **reducer enhancer** (or a **higher order reducer**) is a function that takes a reducer, and returns a new reducer that is able to handle new actions, or to hold more state, delegating control to the inner reducer for the actions it doesn't understand.
 
-```js
+```javascript
 function doNothingWith(reducer) {
   return function(state, action) {
     // Just call the passed reducer
@@ -384,7 +375,7 @@ function doNothingWith(reducer) {
 
 `combineReducers()` is an example of reducer enhancer because it takes reducers and returns a new reducer:
 
-```js
+```javascript
 function combineReducers(reducers) {
   return function(state = {}, action) {
     return Object.keys(reducers).reduce((nextState, key) => {
@@ -399,7 +390,7 @@ function combineReducers(reducers) {
 Some usages:
 
 - undo/redo/clear history
-- throttling actions
+-
 
 ### React integration
 
@@ -409,6 +400,7 @@ Some usages:
 
 - Redux: https://redux.js.org
 - Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
+- Idiomatic Redux: https://blog.isquaredsoftware.com/series/idiomatic-redux/
 
 - Redux Thunk Middleware: https://github.com/reduxjs/redux-thunk
 - Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
