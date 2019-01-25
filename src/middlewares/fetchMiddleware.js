@@ -16,12 +16,11 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   const {
     method = 'GET',
     url,
-    msg,
     successAction,
     errorAction,
   } = payload;
 
-  dispatch(fetchStart({ method, url, msg }));
+  dispatch(fetchStart({ method, url }));
 
   try {
     const { data } = await axios.request({

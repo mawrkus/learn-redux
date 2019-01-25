@@ -12,13 +12,14 @@ const {
 } = require('./middlewares');
 
 const {
-  comments,
-  fetch,
-} = require('./reducers');
-const {
   addComment,
   fetchComment,
 } = require('./actions');
+
+const {
+  comments,
+  fetch,
+} = require('./reducers');
 
 const reducer = combineReducers({ comments, fetch });
 
@@ -38,6 +39,6 @@ console.log('___________________________________________________________________
 // store.subscribe(() => console.log('Store updated!', store.getState()));
 
 store.dispatch(fetchComment());
-store.dispatch(addComment('Yey! So cool :D'));
+store.dispatch(addComment({ text: 'Yey! So cool :D' }));
 store.dispatch(fetchComment());
-store.dispatch(addComment('Im-pre-ssive!!!'));
+store.dispatch(addComment({ text: 'Im-pre-ssive!!!' }));

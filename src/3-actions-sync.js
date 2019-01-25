@@ -4,14 +4,15 @@ const {
 } = require('redux');
 
 const {
-  reactions,
-  comments,
-} = require('./reducers');
-const {
   like,
   dislike,
   addComment,
 } = require('./actions');
+
+const {
+  reactions,
+  comments,
+} = require('./reducers');
 
 const reducer = combineReducers({ reactions, comments });
 
@@ -27,7 +28,7 @@ store.subscribe(() => console.log('Store updated!', store.getState()));
 
 store.dispatch(like());
 store.dispatch(like());
-store.dispatch(addComment('Yey! So cool :D'));
+store.dispatch(addComment({ text: 'Yey! So cool :D' }));
 store.dispatch(dislike());
 store.dispatch(like());
-store.dispatch(addComment('Im-pre-ssive!!!'));
+store.dispatch(addComment({ text: 'Im-pre-ssive!!!' }));

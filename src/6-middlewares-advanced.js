@@ -1,5 +1,6 @@
 const {
   createStore,
+  combineReducers,
   applyMiddleware,
 } = require('redux');
 
@@ -11,11 +12,18 @@ const {
   fetchMiddleware,
 } = require('./middlewares');
 
-const reducer = require('./reducers/combine');
 const {
   fetchUsers,
   fetchUser,
 } = require('./actions');
+
+const {
+  users,
+  fetch,
+  messages,
+} = require('./reducers');
+
+const reducer = combineReducers({ users, fetch, messages });
 
 const store = createStore(
   reducer,
