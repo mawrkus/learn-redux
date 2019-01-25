@@ -3,7 +3,7 @@ const { createStore, combineReducers, applyMiddleware } = require('redux');
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
 
-const { loggerMiddleware } = require('./middlewares');
+const { loggerMiddleware } = require('./middleware');
 
 const { like, dislike, reactionsReducer } = require('./reactions');
 const { addComment, commentsReducer } = require('./comments');

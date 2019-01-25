@@ -25,7 +25,7 @@ yarn add redux
 
 ![Redux data flow](./img/redux-data-flow.png)
 
-Benefits:
+**Benefits:**
 
 - Apps more predictable (single source of truth, unidirectional data flow).
 - Traceability of every state mutations -> undo/redo is trivial (aka "time travel debugging").
@@ -121,7 +121,7 @@ store.dispatch({ type: 'LIKE' });
 
 ## Best practices
 
-### Multiple reducers
+### Combining multiple reducers
 
 As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and to combine them.
 
@@ -216,7 +216,7 @@ const store = createStore(reducer);
 // ...
 ```
 
-### Action creators
+### Using action creators
 
 - An **action creator** is a (factory) function that creates an action.
 - Calling an action creator only produces an action, it does not dispatch it.
@@ -311,11 +311,20 @@ store.dispatch(addCommentAsync('Boom.'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
-There is a rich ecosystem of middlewares to deal with async actions: `redux-promise`, `redux-promise-middleware`, `redux-observable`, `redux-saga` (to build more complex asynchronous actions) or `redux-pack`.
+There is a rich ecosystem of middleware to deal with async actions: `redux-promise`, `redux-promise-middleware`, `redux-observable`, `redux-saga` (to build more complex asynchronous actions) or `redux-pack`.
 
-You can even write a your own custom middlewares...
+You can even write a your own custom middleware...
 
-### Middlewares
+#### But why using actions creator?
+
+1. **Basic abstraction:** Rather than writing action type strings in every component that needs to create the same type of action, put the logic for creating that action in one place.
+2. Documentation: The parameters of the function act as a guide for what data is needed to go into the action.
+3. Brevity and DRY: There could be some larger logic that goes into preparing the action object, rather than just immediately returning it.
+4. Encapsulation and consistency: Consistently using action creators means that a component doesn't have to know any of the details of creating and dispatching the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls. It just calls this.props.someBoundActionCreator(arg1, arg2), and lets the action creator worry about how to handle things.
+5. Testability and flexibility: if a component only ever calls a function passed in as a prop rather than explicitly referencing dispatch, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
+
+
+### Middleware
 
 - They provide **extension points** between dispatching an action and the moment it reaches the reducer.
 - They are higher-order functions that compose a dispatch function to return a new dispatch function.
@@ -352,7 +361,7 @@ const store = createStore(
 // ...
 ```
 
-#### Types of middlewares
+#### Types of middleware
 
 -
 
@@ -397,4 +406,4 @@ Some usages:
 - Redux amazing docs -> https://redux.js.org/introduction/getting-started
 - Getting Started with Redux videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
 - Idiomatic Redux (series of really good blog posts from a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
-- Practical Advanced Redux video (live coding demos of middlewares) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
+- Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
