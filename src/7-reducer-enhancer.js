@@ -54,4 +54,15 @@ store.dispatch(like());
 store.dispatch(addComment({ text: 'Im-pre-ssive!!!' }));
 
 store.dispatch(redo());
-//store.dispatch(clear());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(undo());
+store.dispatch(redo());
+store.dispatch(redo());
+store.dispatch(redo());
+store.dispatch(clear());
