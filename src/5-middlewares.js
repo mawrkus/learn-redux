@@ -31,7 +31,7 @@ console.log('___________________________________________________________________
 console.log('Demo #5: middlewares');
 console.log('__________________________________________________________________________________');
 
-store.subscribe(() => console.log('Store updated!', store.getState()));
+// store.subscribe(() => console.log('Store updated!', store.getState()));
 
 store.dispatch(fetchComment());
 store.dispatch(addComment('Yey! So cool :D'));
