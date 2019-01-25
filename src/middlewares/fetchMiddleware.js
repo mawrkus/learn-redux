@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { omit } = require('lodash'); // lodash.omit is buggy!
 
 const {
   ACTIONS_FETCH,
@@ -16,29 +17,41 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   const {
     method = 'GET',
     url,
-    successAction,
-    errorAction,
+    meta = {},
   } = payload;
 
-  dispatch(fetchStart({ method, url }));
+  const {
+    resource,
+    successAction,
+    errorAction,
+  } = meta;
+
+  const fetchActionsPayload = omit(payload, ['meta.successAction', 'meta.errorAction']);
+
+  dispatch(fetchStart({ payload: fetchActionsPayload }));
+
+  let data;
+  let error;
 
   try {
-    const { data } = await axios.request({
+    const response = await axios.request({
       method,
       url
     });
 
-    dispatch(fetchEnd({ method, url, data }));
+    data = response.data;
+  } catch(fetchError) {
+    error = fetchError;
+  }
 
-    if (successAction) {
-      dispatch(successAction({ data }));
-    }
-  } catch(error) {
-    dispatch(fetchEnd({ method, url, error }));
+  dispatch(fetchEnd({ payload: fetchActionsPayload, data, error }));
 
-    if (errorAction) {
-      dispatch(errorAction({ error }));
-    }
+  if (!error && successAction) {
+    dispatch(successAction({ data }));
+  }
+
+  if (error && errorAction) {
+    dispatch(errorAction({ error }));
   }
 };
 

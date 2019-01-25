@@ -3,25 +3,19 @@ const ACTIONS_FETCH = {
   START: Symbol('fetch start'),
   END: Symbol('fetch end'),
 };
-const fetchStart = ({ method, url } = {}) => {
+const fetchStart = ({ payload } = {}) => {
   return {
     type: ACTIONS_FETCH.START,
-    payload: {
-      method,
-      url,
-    },
+    payload,
   };
 }
 
-const fetchEnd = ({ method, url, data, error } = {}) => {
+const fetchEnd = ({ payload, data, error } = {}) => {
   return {
     type: ACTIONS_FETCH.END,
-    payload: {
-      method,
-      url,
-      data,
-      error,
-    },
+    payload,
+    data,
+    error,
   };
 }
 

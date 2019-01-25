@@ -23,8 +23,11 @@ const fetchUsers = ({ limit }) => {
     type: ACTIONS_FETCH.FETCH_REQUEST,
     payload: {
       url,
-      successAction: ({ data }) => displayUsers({ users: data }),
-      errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
+      meta: {
+        resource: 'users',
+        successAction: ({ data }) => displayUsers({ users: data }),
+        errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
+      },
     },
   };
 };
@@ -43,8 +46,12 @@ const fetchUser = ({ id }) => {
     type: ACTIONS_FETCH.FETCH_REQUEST,
     payload: {
       url,
-      successAction: ({ data }) => displayUsers({ user: data }),
-      errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
+      meta: {
+        resource: 'user',
+        id,
+        successAction: ({ data }) => displayUsers({ user: data }),
+        errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
+      },
     },
   };
 };
