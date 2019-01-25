@@ -28,21 +28,19 @@ yarn add redux-starter-kit
 
 ## Concepts
 
-- The whole state of your app is stored in an object tree inside **a single store**.
-- The only way to change the state tree is **to emit an action**, an object describing what happened.
-- To specify how the actions transform the state tree, you write **pure reducers**.
+1. The whole state of your app is stored in an object tree inside **a single store**.
+2. The only way to change the state tree is **to emit an action**, an object describing what happened.
+3. To specify how the actions transform the state tree, you write **reducers** (pure functions).
 
-### Data flow
+![Redux data flow](./img/redux-data-flow.png)
 
-![Redux data flow](./img/redux-data-flow.png);
+Benefits:
 
-### Benefits
-
-- more predictable apps (single source of truth, unidirectional data flow)
-- traceability of every state mutations -> undo/redo is trivial (aka "time travel debugging")
-- state can be easily persisted and restored (from server or any storage)
-- easier to debug/inspect a single state tree
-- apps scale really nicely
+- Apps more predictable (single source of truth, unidirectional data flow).
+- Traceability of every state mutations -> undo/redo is trivial (aka "time travel debugging").
+- The state can be easily persisted and restored (from server or any storage).
+- It's easier to debug/inspect a single state tree.
+- Apps scale really nicely :)
 
 ### Store
 
@@ -58,8 +56,8 @@ const store = createStore(reducer);
 
 ### Actions
 
-- Disptaching actions is **the only way** to mutate the internal state.
-- Each action is an **object with a type** that describes what hapened.
+- Dispatching actions is **the only way** to mutate the internal state.
+- Each action is an **object with a type** that describes what happened.
 
 ```js
 const { createStore } = require('redux');
@@ -124,9 +122,11 @@ store.dispatch({ type: 'DISLIKE' });
 store.dispatch({ type: 'LIKE' });
 ```
 
-#### Multiple reducers
+## Best practices
 
-As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and combine them.
+### Multiple reducers
+
+As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and to combine them.
 
 ```js
 const { createStore } = require('redux');
@@ -230,13 +230,11 @@ const store = createStore(reducer);
 
 #### Sync actions
 
-actions/comments.js:
-
 ```js
 // ...
 
 const COMMENT_ACTIONS = {
-  ADD_COMMENT: 'ADD_COMMENT',
+  ADD_COMMENT: Symbol('add comment'),
 };
 
 function addComment(text) {
@@ -254,12 +252,12 @@ store.dispatch(addComment('Yey! So cool :D'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
-### Async actions
+#### Async actions
 
-- The base `dispatch()` function always sends **synchronously** an action to the store's reducer.
+- `store.dispatch()` always sends **synchronously** an action to the store's reducer.
 - It expects actions to be **plain objects** ready to be consumed by the reducer.
 
-To dispatch asynchronous actions (like fetching data from an API), we can use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
+To dispatch **asynchronous actions** (like fetching data from an API), we can use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
 
 ```bash
 yarn add redux-thunk
@@ -284,8 +282,9 @@ const store = createStore(
 // ...
 ```
 
-- By using this middleware, an action creator can return a function instead of an action object.
-- The action creator becomes a **thunk** (a function that wraps an expression to delay its evaluation) and can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met.
+- By applying this middleware, an action creator can return a function instead of an action object.
+- The action creator becomes a **thunk**, a function that wraps an expression to delay its evaluation.
+- The action creator can be used to **delay the dispatch of an action**, or to dispatch only if a certain condition is met.
 
 ```js
 const {
@@ -303,10 +302,10 @@ const {
 } = require('./actions');
 
 // Function executed by the Redux Thunk middleware
-const addCommentAsync = (text) => {
+const fetchComment = (text) => {
   return (dispatch, getState) => {
     setTimeout(() => {
-      // We can still dispatch actions from here based on the current state
+      // we can now dispatch actions asynchronously, based on the current state
       dispatch(addComment(text));
     }, 1000);
   };
@@ -319,9 +318,9 @@ const store = createStore(
 
 // ...
 
-store.dispatch(addCommentAsync('It gets really interesting!'));
+store.dispatch(fetchComment('It gets really interesting!'));
 store.dispatch(addComment('Yey! So cool :D'));
-store.dispatch(addCommentAsync('Boom.'));
+store.dispatch(fetchComment('Boom.'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
@@ -331,7 +330,7 @@ You can even write a your own custom middlewares...
 
 ### Middlewares
 
-- They provide a 3rd extension point between dispatching an action and the moment it reaches the reducer.
+- They provide **extension points** between dispatching an action and the moment it reaches the reducer.
 - They are higher-order functions that compose a dispatch function to return a new dispatch function.
 - They are composable.
 
@@ -345,25 +344,23 @@ Some usages:
 ```js
 // ...
 
+const loggerMiddleware = ({ getState, dispatch }) => next => action => {
+  console.log('DISPATCH "%s" ->', action.type, action);
+  next(action);
+};
+
 const store = createStore(
   reducer,
   applyMiddleware(
     // Order IS important!
     reduxThunkMiddleware,
-    middleware1,
-    middleware2,
-    middleware3,
+    loggerMiddleware,
+    // ...
   ),
 );
 
 // ...
 ```
-
-#### Types of middlewares
-
-- All actions (logging, ...)
-- All with flag (throttle, analytics, ...)
-- One type (fetch, ...)
 
 ### Sagas
 
@@ -371,7 +368,7 @@ TODO
 
 ### React integration
 
-TODO
+:)
 
 ## Resources
 
