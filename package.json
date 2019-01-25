@@ -11,7 +11,8 @@
     "demo:4": "node src/4-actions-async.js",
     "demo:5": "node src/5-middlewares.js",
     "demo:6": "node src/6-middlewares-advanced.js",
-    "demos": "yarn run demo:1 && yarn run demo:2 && yarn run demo:3 && yarn run demo:4 && yarn run demo:5 && yarn run demo:6"
+    "demo:7": "node src/7-reducer-enhancer.js",
+    "demos": "yarn run demo:1 && yarn run demo:2 && yarn run demo:3 && yarn run demo:4 && yarn run demo:5 && yarn run demo:6 && yarn run demo:7"
   },
   "dependencies": {
     "axios": "^0.18.0",
