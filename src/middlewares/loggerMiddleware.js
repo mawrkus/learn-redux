@@ -1,12 +1,9 @@
 const loggerMiddleware = ({ getState, dispatch }) => next => action => {
-  const stateBefore = getState();
-  console.log('DISPATCH "%s" ->', action.type, action);
-  console.log(' -> BEFORE', stateBefore);
+  console.log('* Dispatching "%s" ->', action.type, action);
 
   next(action);
 
-  const stateAfter = getState();
-  console.log(' -> AFTER', stateAfter);
+  console.log('-> Next state ->', getState());
 };
 
 module.exports = loggerMiddleware;

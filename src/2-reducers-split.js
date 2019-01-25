@@ -47,7 +47,7 @@ store.subscribe(() => console.log('Store updated!', store.getState()));
 
 store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'LIKE' });
+store.dispatch({ type: 'ADD_COMMENT', payload: { text: 'Yey! So cool :D' } });
 store.dispatch({ type: 'DISLIKE' });
 store.dispatch({ type: 'LIKE' });
-store.dispatch({ type: 'ADD_COMMENT', payload: { text: 'Yey! So cool :D' } });
 store.dispatch({ type: 'ADD_COMMENT', payload: { text: 'Im-pre-ssive!!!' } });

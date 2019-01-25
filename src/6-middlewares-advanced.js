@@ -11,8 +11,7 @@ const {
   fetchMiddleware,
 } = require('./middlewares');
 
-const reducer = require('./reducers');
-
+const reducer = require('./reducers/combine');
 const {
   fetchUsers,
   fetchUser,

@@ -51,7 +51,11 @@ const { createStore } = require('redux');
 
 // TODO: define a reducer
 
+// API -> { getState(), subscribe(), dispatch() } - see next example
 const store = createStore(reducer);
+
+// accessing the state
+store.getState();
 ```
 
 ### Actions
@@ -64,11 +68,13 @@ const { createStore } = require('redux');
 
 // TODO: define a reducer
 
-// API -> { subscribe, dispatch, getState }
+// API -> { getState(), subscribe(), dispatch() }
 const store = createStore(reducer);
 
-store.subscribe(() => console.log(store.getState()))
+// registering a mutation listener
+const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
+// updating the state
 store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'LIKE' });
 store.dispatch({ type: 'DISLIKE' });
