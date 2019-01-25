@@ -33,7 +33,7 @@ const store = createStore(
 const { fetchUsers, fetchUser } = bindActionCreators(usersActionCreators, store.dispatch);
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #7: middlewares advanced');
+console.log('Demo #7: advanced middleware');
 console.log('__________________________________________________________________________________');
 
 // store.subscribe(() => console.log('Store updated!', store.getState()));
