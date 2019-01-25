@@ -1,5 +1,7 @@
 const { ACTIONS_FETCH } = require('../fetch');
-const { displayErrorMsg } = require('../messages');
+const { messagesActionCreators } = require('../messages');
+
+const { displayErrorMsg } = messagesActionCreators;
 
 const ACTIONS_USERS = {
   UPDATE_USERS_LIST: Symbol('update users list'),
@@ -55,6 +57,8 @@ const fetchUser = ({ id }) => {
 
 module.exports = {
   ACTIONS_USERS,
-  fetchUsers,
-  fetchUser,
+  usersActionCreators: {
+    fetchUsers,
+    fetchUser,
+  },
 };

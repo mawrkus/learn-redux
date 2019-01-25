@@ -1,7 +1,9 @@
 const axios = require('axios');
 const { omit } = require('lodash'); // lodash.omit is buggy!
 
-const { ACTIONS_FETCH, fetchStart, fetchEnd } = require('../fetch');
+const { ACTIONS_FETCH, fetchActionCreators } = require('../fetch');
+
+const { fetchStart, fetchEnd } = fetchActionCreators;
 
 // eslint-disable-next-line consistent-return
 const fetchMiddleware = ({ dispatch }) => next => async action => {

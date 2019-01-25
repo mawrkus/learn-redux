@@ -15,16 +15,20 @@ let commentIndex = 0;
 
 const addCommentAsync = () => {
   return (dispatch) => {
+    const ms = Math.ceil(Math.random() * 1000);
+
     setTimeout(() => {
       const comment = ['Wreeealy interesting!', 'Boom.'][commentIndex % 2];
-      dispatch(addComment({ text: comment }));
+      dispatch(addComment({ text: `${comment} (async after ${ms}ms)` }));
       commentIndex += 1;
-    }, Math.random() * 1000);
+    }, ms);
   };
 };
 
 module.exports = {
   ACTIONS_COMMENTS,
-  addComment,
-  addCommentAsync,
+  commentsActionCreators: {
+    addComment,
+    addCommentAsync,
+  },
 };

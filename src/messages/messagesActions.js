@@ -23,6 +23,8 @@ const displayErrorMsg = ({ text }) => {
 
 module.exports = {
   ACTIONS_MESSAGES,
-  displayInfoMsg,
-  displayErrorMsg,
+  messagesActionCreators: {
+    displayInfoMsg,
+    displayErrorMsg,
+  },
 };

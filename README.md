@@ -315,13 +315,13 @@ There is a rich ecosystem of middleware to deal with async actions: `redux-promi
 
 You can even write a your own custom middleware...
 
-#### But why using actions creator?
+#### Why using actions creators?
 
-1. **Basic abstraction:** Rather than writing action type strings in every component that needs to create the same type of action, put the logic for creating that action in one place.
-2. Documentation: The parameters of the function act as a guide for what data is needed to go into the action.
-3. Brevity and DRY: There could be some larger logic that goes into preparing the action object, rather than just immediately returning it.
-4. Encapsulation and consistency: Consistently using action creators means that a component doesn't have to know any of the details of creating and dispatching the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls. It just calls this.props.someBoundActionCreator(arg1, arg2), and lets the action creator worry about how to handle things.
-5. Testability and flexibility: if a component only ever calls a function passed in as a prop rather than explicitly referencing dispatch, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
+1. **Basic abstraction** -> rather than writing action type strings in every component that needs to create the same type of action, put the logic for creating that action in one place.
+2. **Documentation** -> the parameters of the function act as a guide for what data is needed to go into the action.
+3. **Brevity and DRY** -> there could be some larger logic that goes into preparing the action object, rather than just immediately returning it.
+4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
+5. **Testability and flexibility** -> if a component only ever calls a function passed in as a prop rather than explicitly referencing dispatch, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
 
 
 ### Middleware
@@ -333,12 +333,12 @@ You can even write a your own custom middleware...
 
 Some usages:
 
-- logging actions
+- centralized actions logging
 - centralizing analytics
 - centralizing API requests
 - throttling actions
 
-They are a place of choice to manage all the side effects.
+They are a place of choice for managing all the side effects.
 
 ```javascript
 // ...

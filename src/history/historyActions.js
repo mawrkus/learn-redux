@@ -18,7 +18,9 @@ const clear = () => ({
 
 module.exports = {
   ACTIONS_HISTORY,
-  undo,
-  redo,
-  clear,
+  historyActionCreators: {
+    undo,
+    redo,
+    clear,
+  },
 };

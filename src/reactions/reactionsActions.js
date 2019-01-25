@@ -17,6 +17,8 @@ const dislike = () => {
 
 module.exports = {
   ACTIONS_REACTIONS,
-  like,
-  dislike,
+  reactionsActionCreators: {
+    like,
+    dislike,
+  },
 };

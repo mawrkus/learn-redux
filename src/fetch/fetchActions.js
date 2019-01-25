@@ -22,6 +22,8 @@ const fetchEnd = ({ payload, data, error } = {}) => {
 
 module.exports = {
   ACTIONS_FETCH,
-  fetchStart,
-  fetchEnd,
+  fetchActionCreators: {
+    fetchStart,
+    fetchEnd,
+  },
 };

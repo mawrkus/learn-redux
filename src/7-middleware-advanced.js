@@ -1,11 +1,16 @@
-const { createStore, combineReducers, applyMiddleware } = require('redux');
+const {
+  createStore,
+  combineReducers,
+  applyMiddleware,
+  bindActionCreators,
+} = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
 
 const { loggerMiddleware, fetchMiddleware } = require('./middleware');
 
-const { fetchUsers, fetchUser, usersReducer } = require('./users');
+const { usersActionCreators, usersReducer } = require('./users');
 const { fetchReducer } = require('./fetch');
 const { messagesReducer } = require('./messages');
 
@@ -25,12 +30,14 @@ const store = createStore(
   ),
 );
 
+const { fetchUsers, fetchUser } = bindActionCreators(usersActionCreators, store.dispatch);
+
 console.log('__________________________________________________________________________________');
-console.log('Demo #6: middlewares advanced');
+console.log('Demo #7: middlewares advanced');
 console.log('__________________________________________________________________________________');
 
 // store.subscribe(() => console.log('Store updated!', store.getState()));
 
-store.dispatch(fetchUsers({ limit: 3 }));
-store.dispatch(fetchUser({ id: 1 }));
-store.dispatch(fetchUser({ id: 42 })); // does not exist
+fetchUsers({ limit: 3 });
+fetchUser({ id: 1 });
+fetchUser({ id: 42 }); // does not exist

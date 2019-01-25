@@ -10,10 +10,11 @@
     "demo:2": "node src/2-reducers-combination.js",
     "demo:3": "node src/3-actions-sync.js",
     "demo:4": "node src/4-actions-async.js",
-    "demo:5": "node src/5-middlewares.js",
-    "demo:6": "node src/6-middlewares-advanced.js",
-    "demo:7": "node src/7-reducer-enhancer.js",
-    "demos": "yarn run demo:1 && yarn run demo:2 && yarn run demo:3 && yarn run demo:4 && yarn run demo:5 && yarn run demo:6 && yarn run demo:7"
+    "demo:5": "node src/5-bind-actions-creators.js",
+    "demo:6": "node src/6-middleware-basic.js",
+    "demo:7": "node src/7-middleware-advanced.js",
+    "demo:8": "node src/8-reducer-enhancer.js",
+    "demos": "yarn run demo:1 && yarn run demo:2 && yarn run demo:3 && yarn run demo:4 && yarn run demo:5 && yarn run demo:6 && yarn run demo:7 && yarn run demo:8"
   },
   "dependencies": {
     "axios": "^0.18.0",
