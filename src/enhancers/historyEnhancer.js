@@ -1,5 +1,7 @@
 const { ACTIONS_HISTORY } = require('../actions/historyActions');
 
+/* Higher order reducer or reducer enhancer to add undo/redo/clear functionality to redux state containers */
+
 // Our enhancer is also a reducer!
 const history = (reducer) => {
   const initialState = {

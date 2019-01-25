@@ -369,6 +369,38 @@ const store = createStore(
 // ...
 ```
 
+### Higher order reducers or reducer enhancers
+
+A **reducer enhancer** (or a **higher order reducer**) is a function that takes a reducer, and returns a new reducer that is able to handle new actions, or to hold more state, delegating control to the inner reducer for the actions it doesn't understand.
+
+```js
+function doNothingWith(reducer) {
+  return function(state, action) {
+    // Just call the passed reducer
+    return reducer(state, action)
+  }
+}
+```
+
+`combineReducers()` is an example of reducer enhancer because it takes reducers and returns a new reducer:
+
+```js
+function combineReducers(reducers) {
+  return function(state = {}, action) {
+    return Object.keys(reducers).reduce((nextState, key) => {
+      // Call every reducer with the part of the state it manages
+      nextState[key] = reducers[key](state[key], action)
+      return nextState
+    }, {})
+  }
+}
+```
+
+Some usages:
+
+- undo/redo/clear history
+- throttling actions
+
 ### React integration
 
 ;)
@@ -377,6 +409,10 @@ const store = createStore(
 
 - Redux: https://redux.js.org
 - Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
+
 - Redux Thunk Middleware: https://github.com/reduxjs/redux-thunk
 - Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
+
+- Redux Undo: https://github.com/omnidan/redux-undo
+
 - Redux Starter Kit: https://redux-starter-kit.js.org/
