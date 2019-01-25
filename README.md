@@ -321,7 +321,7 @@ You can even write a your own custom middleware...
 2. **Documentation** -> the parameters of the function act as a guide for what data is needed to go into the action.
 3. **Brevity and DRY** -> there could be some larger logic that goes into preparing the action object, rather than just immediately returning it.
 4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
-5. **Testability and flexibility** -> if a component only ever calls a function passed in as a prop rather than explicitly referencing dispatch, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
+5. **Testability and flexibility** -> if a component only ever calls a function passed to it rather than explicitly referencing `dispatch`, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
 
 
 ### Middleware
