@@ -16,7 +16,7 @@ const initialState = { reactions: { likes: 1000, dislikes: 0 } };
 const store = createStore(reducer, initialState);
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #3: sync actions (with preloaded state)');
+console.log('Demo #3: sync action creators (with preloaded state)');
 console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));

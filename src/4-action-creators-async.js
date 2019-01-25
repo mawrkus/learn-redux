@@ -15,7 +15,7 @@ const store = createStore(
 );
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #4: async actions');
+console.log('Demo #4: async action creators');
 console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));
