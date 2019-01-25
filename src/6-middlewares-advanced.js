@@ -1,29 +1,19 @@
-const {
-  createStore,
-  combineReducers,
-  applyMiddleware,
-} = require('redux');
+const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
 
-const {
-  loggerMiddleware,
-  fetchMiddleware,
-} = require('./middlewares');
+const { loggerMiddleware, fetchMiddleware } = require('./middlewares');
 
-const {
-  fetchUsers,
-  fetchUser,
-} = require('./actions');
+const { fetchUsers, fetchUser, usersReducer } = require('./users');
+const { fetchReducer } = require('./fetch');
+const { messagesReducer } = require('./messages');
 
-const {
-  users,
-  fetch,
-  messages,
-} = require('./reducers');
-
-const reducer = combineReducers({ users, fetch, messages });
+const reducer = combineReducers({
+  users: usersReducer,
+  fetch: fetchReducer,
+  messages: messagesReducer,
+});
 
 const store = createStore(
   reducer,

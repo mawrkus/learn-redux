@@ -1,12 +1,11 @@
-const { ACTIONS_HISTORY } = require('../actions/historyActions');
-
-/* Higher order reducer or reducer enhancer to add undo/redo/clear functionality to redux state containers */
+const { ACTIONS_HISTORY } = require('./historyActions');
 
 // Our enhancer is also a reducer!
-const history = (reducer) => {
+const historyEnhancer = (reducer) => {
   const initialState = {
     past: [],
-    present: reducer(undefined, {}), // only to populate the initial state
+    // we call the reducer only to populate the initial state
+    present: reducer(undefined, {}),
     future: [],
   };
 
@@ -46,7 +45,7 @@ const history = (reducer) => {
       default:
         // Delegate handling the action to the passed reducer
         const newPresent = reducer(present, action);
-        if (present === newPresent) {
+        if (newPresent === present) {
           return state;
         }
         return {
@@ -58,4 +57,4 @@ const history = (reducer) => {
   };
 };
 
-module.exports = history;
+module.exports = historyEnhancer;

@@ -1,27 +1,19 @@
-const {
-  createStore,
-  combineReducers,
-} = require('redux');
+const { createStore, combineReducers } = require('redux');
 
-const {
-  like,
-  dislike,
-  addComment,
-} = require('./actions');
+const { like, dislike, reactionsReducer } = require('./reactions');
+const { addComment, commentsReducer } = require('./comments');
 
-const {
-  reactions,
-  comments,
-} = require('./reducers');
-
-const reducer = combineReducers({ reactions, comments });
+const reducer = combineReducers({
+  reactions: reactionsReducer,
+  comments: commentsReducer,
+});
 
 const initialState = { reactions: { likes: 1000, dislikes: 0 } };
 
 const store = createStore(reducer, initialState);
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #3: sync actions');
+console.log('Demo #3: sync actions with preloaded state');
 console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));

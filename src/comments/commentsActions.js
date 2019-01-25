@@ -1,8 +1,3 @@
-const {
-  fetchStart,
-  fetchEnd,
-} = require('./fetchActions');
-
 const ACTIONS_COMMENTS = {
   ADD: Symbol('add comment'),
 };
@@ -18,14 +13,12 @@ const addComment = ({ text }) => {
 
 let commentIndex = 0;
 
-const fetchComment = () => {
-  return (dispatch, getState) => {
-    dispatch(fetchStart());
-
+const addCommentAsync = () => {
+  return (dispatch) => {
     setTimeout(() => {
-      const comment = ['Wreeealy interesting!', 'Boom.'][commentIndex++ % 2];
-      dispatch(fetchEnd({ data: comment }));
+      const comment = ['Wreeealy interesting!', 'Boom.'][commentIndex % 2];
       dispatch(addComment({ text: comment }));
+      commentIndex += 1;
     }, Math.random() * 1000);
   };
 };
@@ -33,5 +26,5 @@ const fetchComment = () => {
 module.exports = {
   ACTIONS_COMMENTS,
   addComment,
-  fetchComment,
+  addCommentAsync,
 };

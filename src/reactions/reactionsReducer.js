@@ -1,6 +1,6 @@
-const { ACTIONS_REACTIONS } = require('../actions/reactionsActions');
+const { ACTIONS_REACTIONS } = require('./reactionsActions');
 
-const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
+const reactionsReducer = (state = { likes: 0, dislikes: 0 }, action) => {
   switch (action.type) {
     case ACTIONS_REACTIONS.LIKE:
       return {
@@ -19,4 +19,4 @@ const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
   }
 };
 
-module.exports = reactions;
+module.exports = reactionsReducer;

@@ -2,22 +2,13 @@
 
 <img style="float:right; margin:0 0 0 12px;height:64px;" src="./img/redux-logo.png" alt="Redux logo">
 
-Redux is a predictable state container for JavaScript apps.
-
+> Redux is a predictable state container for JavaScript apps.
 https://redux.js.org
 
 ## Installation
 
-From scratch (https://www.npmjs.com/package/redux):
-
 ```bash
 yarn add redux
-```
-
-Started kit (https://redux-starter-kit.js.org):
-
-```bash
-yarn add redux-starter-kit
 ```
 
 ## Motivation
@@ -294,12 +285,10 @@ const reduxThunkMiddleware = require('redux-thunk').default;
 
 // ...
 
-const {
-  addComment,
-} = require('./actions');
+const { addComment } = require('./comments');
 
 // Function executed by the Redux Thunk middleware
-const fetchComment = (text) => {
+const addCommentAsync = (text) => {
   // the async action creator automatically receives dispatch() and getState()
   return (dispatch, getState) => {
     setTimeout(() => {
@@ -316,9 +305,9 @@ const store = createStore(
 
 // ...
 
-store.dispatch(fetchComment('It gets really interesting!'));
+store.dispatch(addCommentAsync('It gets really interesting!'));
 store.dispatch(addComment('Yey! So cool :D'));
-store.dispatch(fetchComment('Boom.'));
+store.dispatch(addCommentAsync('Boom.'));
 store.dispatch(addComment('Im-pre-ssive!!!'));
 ```
 
@@ -330,7 +319,8 @@ You can even write a your own custom middlewares...
 
 - They provide **extension points** between dispatching an action and the moment it reaches the reducer.
 - They are higher-order functions that compose a dispatch function to return a new dispatch function.
-- They are composable.
+
+![Redux Middleware](./img/redux-middleware.png)
 
 Some usages:
 
@@ -338,6 +328,8 @@ Some usages:
 - centralizing analytics
 - centralizing API requests
 - throttling actions
+
+They are a place of choice to manage all the side effects.
 
 ```javascript
 // ...
@@ -359,6 +351,10 @@ const store = createStore(
 
 // ...
 ```
+
+#### Types of middlewares
+
+-
 
 ### Higher order reducers or reducer enhancers
 
@@ -398,13 +394,7 @@ Some usages:
 
 ## Resources
 
-- Redux: https://redux.js.org
-- Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
-- Idiomatic Redux: https://blog.isquaredsoftware.com/series/idiomatic-redux/
-
-- Redux Thunk Middleware: https://github.com/reduxjs/redux-thunk
-- Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
-
-- Redux Undo: https://github.com/omnidan/redux-undo
-
-- Redux Starter Kit: https://redux-starter-kit.js.org/
+- Redux amazing docs -> https://redux.js.org/introduction/getting-started
+- Getting Started with Redux videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
+- Idiomatic Redux (series of really good blog posts from a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
+- Practical Advanced Redux video (live coding demos of middlewares) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s

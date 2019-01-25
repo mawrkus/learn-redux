@@ -3,12 +3,13 @@ const ACTIONS_FETCH = {
   START: Symbol('fetch start'),
   END: Symbol('fetch end'),
 };
+
 const fetchStart = ({ payload } = {}) => {
   return {
     type: ACTIONS_FETCH.START,
     payload,
   };
-}
+};
 
 const fetchEnd = ({ payload, data, error } = {}) => {
   return {
@@ -17,7 +18,7 @@ const fetchEnd = ({ payload, data, error } = {}) => {
     data,
     error,
   };
-}
+};
 
 module.exports = {
   ACTIONS_FETCH,

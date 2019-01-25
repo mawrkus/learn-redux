@@ -1,9 +1,6 @@
-const {
-  createStore,
-  combineReducers,
-} = require('redux');
+const { createStore, combineReducers } = require('redux');
 
-const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
+const reactionsReducer = (state = { likes: 0, dislikes: 0 }, action) => {
   switch (action.type) {
     case 'LIKE':
       return {
@@ -22,7 +19,7 @@ const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
   }
 };
 
-const comments = (state = [], action) => {
+const commentsReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_COMMENT':
       return [
@@ -35,12 +32,15 @@ const comments = (state = [], action) => {
   }
 };
 
+const reducer = combineReducers({
+  reactions: reactionsReducer,
+  comments: commentsReducer,
+});
 
-const reducer = combineReducers({ reactions, comments });
 const store = createStore(reducer);
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #2: reducers split');
+console.log('Demo #2: reducers combination');
 console.log('__________________________________________________________________________________');
 
 store.subscribe(() => console.log('Store updated!', store.getState()));

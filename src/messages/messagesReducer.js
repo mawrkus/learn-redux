@@ -1,6 +1,6 @@
-const { ACTIONS_MESSAGES } = require('../actions/messagesActions');
+const { ACTIONS_MESSAGES } = require('./messagesActions');
 
-const reactions = (state = { type: '', text: '' }, action) => {
+const messagesReducer = (state = { type: '', text: '' }, action) => {
   switch (action.type) {
     case ACTIONS_MESSAGES.DISPLAY_INFO:
       return {
@@ -21,4 +21,4 @@ const reactions = (state = { type: '', text: '' }, action) => {
   }
 };
 
-module.exports = reactions;
+module.exports = messagesReducer;

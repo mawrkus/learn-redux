@@ -1,6 +1,6 @@
-const { ACTIONS_COMMENTS } = require('../actions/commentsActions');
+const { ACTIONS_COMMENTS } = require('./commentsActions');
 
-const comments = (state = [], action) => {
+const commentsReducer = (state = [], action) => {
   switch (action.type) {
     case ACTIONS_COMMENTS.ADD:
       return [
@@ -13,4 +13,4 @@ const comments = (state = [], action) => {
   }
 };
 
-module.exports = comments;
+module.exports = commentsReducer;

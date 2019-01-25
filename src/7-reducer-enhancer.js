@@ -1,35 +1,25 @@
-const {
-  createStore,
-  combineReducers,
-  applyMiddleware,
-} = require('redux');
+const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
 
-const {
-  loggerMiddleware,
-} = require('./middlewares');
+const { loggerMiddleware } = require('./middlewares');
 
+const { like, dislike, reactionsReducer } = require('./reactions');
+const { addComment, commentsReducer } = require('./comments');
 const {
-  like,
-  dislike,
-  addComment,
   undo,
   redo,
   clear,
-} = require('./actions');
+  historyEnhancer,
+} = require('./history');
 
-const {
-  reactions,
-  comments,
-} = require('./reducers');
+const reducer = historyEnhancer(combineReducers({
+  reactions: reactionsReducer,
+  comments: commentsReducer,
+}));
 
-const {
-  history,
-} = require('./enhancers');
-
-const reducer = history(combineReducers({ reactions, comments }));
+loggerMiddleware.pretty = true;
 
 const store = createStore(
   reducer,

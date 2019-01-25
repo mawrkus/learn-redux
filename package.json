@@ -5,8 +5,9 @@
   "author": "mawrkus <web@sparring-partner.be>",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint ./src",
     "demo:1": "node src/1-basics.js",
-    "demo:2": "node src/2-reducers-split.js",
+    "demo:2": "node src/2-reducers-combination.js",
     "demo:3": "node src/3-actions-sync.js",
     "demo:4": "node src/4-actions-async.js",
     "demo:5": "node src/5-middlewares.js",
@@ -16,8 +17,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.8.0",
     "lodash": "^4.17.11",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0"
   }
 }

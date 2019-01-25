@@ -1,6 +1,6 @@
-const { ACTIONS_FETCH } = require('../actions/fetchActions');
+const { ACTIONS_FETCH } = require('./fetchActions');
 
-const fetch = (state = { requestsCount: 0, isFetching: false }, action) => {
+const fetchReducer = (state = { requestsCount: 0, isFetching: false }, action) => {
   switch (action.type) {
     case ACTIONS_FETCH.START:
       return {
@@ -21,4 +21,4 @@ const fetch = (state = { requestsCount: 0, isFetching: false }, action) => {
   }
 };
 
-module.exports = fetch;
+module.exports = fetchReducer;

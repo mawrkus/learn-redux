@@ -1,13 +1,10 @@
 const axios = require('axios');
 const { omit } = require('lodash'); // lodash.omit is buggy!
 
-const {
-  ACTIONS_FETCH,
-  fetchStart,
-  fetchEnd,
-} = require('../actions/fetchActions');
+const { ACTIONS_FETCH, fetchStart, fetchEnd } = require('../fetch');
 
-const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
+// eslint-disable-next-line consistent-return
+const fetchMiddleware = ({ dispatch }) => next => async action => {
   const { type, payload } = action;
 
   if (type !== ACTIONS_FETCH.FETCH_REQUEST) {
@@ -21,7 +18,6 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   } = payload;
 
   const {
-    resource,
     successAction,
     errorAction,
   } = meta;
@@ -36,11 +32,11 @@ const fetchMiddleware = ({ getState, dispatch }) => next => async action => {
   try {
     const response = await axios.request({
       method,
-      url
+      url,
     });
 
-    data = response.data;
-  } catch(fetchError) {
+    data = response.data; // eslint-disable-line prefer-destructuring
+  } catch (fetchError) {
     error = fetchError;
   }
 

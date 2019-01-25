@@ -1,27 +1,13 @@
-const {
-  createStore,
-  combineReducers,
-  applyMiddleware,
-} = require('redux');
+const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
-const {
-  loggerMiddleware,
-  fetchMiddleware,
-} = require('./middlewares');
 
-const {
-  addComment,
-  fetchComment,
-} = require('./actions');
+const { loggerMiddleware } = require('./middlewares');
 
-const {
-  comments,
-  fetch,
-} = require('./reducers');
+const { addComment, addCommentAsync, commentsReducer } = require('./comments');
 
-const reducer = combineReducers({ comments, fetch });
+const reducer = combineReducers({ comments: commentsReducer });
 
 const store = createStore(
   reducer,
@@ -38,7 +24,7 @@ console.log('___________________________________________________________________
 
 // store.subscribe(() => console.log('Store updated!', store.getState()));
 
-store.dispatch(fetchComment());
+store.dispatch(addCommentAsync());
 store.dispatch(addComment({ text: 'Yey! So cool :D' }));
-store.dispatch(fetchComment());
+store.dispatch(addCommentAsync());
 store.dispatch(addComment({ text: 'Im-pre-ssive!!!' }));

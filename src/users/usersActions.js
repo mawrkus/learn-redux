@@ -1,16 +1,13 @@
-const { ACTIONS_FETCH } = require('./fetchActions');
-const {
-  ACTIONS_MESSAGES,
-  displayErrorMsg,
-} = require('./messagesActions');
+const { ACTIONS_FETCH } = require('../fetch');
+const { displayErrorMsg } = require('../messages');
 
 const ACTIONS_USERS = {
-  DISPLAY_LIST: Symbol('display users list'),
-  DISPLAY_SINGLE: Symbol('display single user'),
+  UPDATE_USERS_LIST: Symbol('update users list'),
+  UPDATE_USER: Symbol('update single user'),
 };
 
-const displayUsers = ({ users }) => ({
-  type: ACTIONS_USERS.DISPLAY_LIST,
+const updateUsers = ({ users }) => ({
+  type: ACTIONS_USERS.UPDATE_USERS_LIST,
   payload: {
     users,
   },
@@ -25,15 +22,15 @@ const fetchUsers = ({ limit }) => {
       url,
       meta: {
         resource: 'users',
-        successAction: ({ data }) => displayUsers({ users: data }),
+        successAction: ({ data }) => updateUsers({ users: data }),
         errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
       },
     },
   };
 };
 
-const displayUser = ({ user }) => ({
-  type: ACTIONS_USERS.DISPLAY_SINGLE,
+const updateUser = ({ user }) => ({
+  type: ACTIONS_USERS.UPDATE_USER,
   payload: {
     user,
   },
@@ -49,7 +46,7 @@ const fetchUser = ({ id }) => {
       meta: {
         resource: 'user',
         id,
-        successAction: ({ data }) => displayUsers({ user: data }),
+        successAction: ({ data }) => updateUser({ user: data }),
         errorAction: ({ error }) => displayErrorMsg({ text: `GET ${url} -> ${error}` }),
       },
     },

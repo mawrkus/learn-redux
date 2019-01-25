@@ -1,6 +1,4 @@
-const {
-  createStore,
-} = require('redux');
+const { createStore } = require('redux');
 
 const reducer = (state = { likes: 0, dislikes: 0 }, action) => {
   switch (action.type) {
