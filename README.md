@@ -309,6 +309,7 @@ const {
 
 // Function executed by the Redux Thunk middleware
 const fetchComment = (text) => {
+  // the async action creator automatically receives dispatch() and getState()
   return (dispatch, getState) => {
     setTimeout(() => {
       // we can now dispatch actions asynchronously, based on the current state
@@ -368,18 +369,14 @@ const store = createStore(
 // ...
 ```
 
-### Sagas
-
-TODO
-
 ### React integration
 
-:)
+;)
 
 ## Resources
 
 - Redux: https://redux.js.org
-- Redux Starter Kit: https://redux-starter-kit.js.org/
+- Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
 - Redux Thunk Middleware: https://github.com/reduxjs/redux-thunk
 - Practical advanced Redux (middlewares): https://www.youtube.com/watch?v=Gjiu7Lgdg3s
-- Getting Started with Redux (Dan Abramov himself): https://egghead.io/series/getting-started-with-redux
+- Redux Starter Kit: https://redux-starter-kit.js.org/

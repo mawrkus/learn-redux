@@ -8,6 +8,12 @@ const fetch = require('./fetchReducer');
 const users = require('./usersReducer');
 const messages = require('./messagesReducer');
 
-const reducer = combineReducers({ reactions, comments, users, messages, fetch });
+const reducer = combineReducers({
+  reactions,
+  comments,
+  users,
+  messages,
+  fetch,
+});
 
 module.exports = reducer;
