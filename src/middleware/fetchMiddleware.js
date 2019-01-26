@@ -5,6 +5,8 @@ const { ACTIONS_FETCH, fetchActionCreators } = require('../fetch');
 
 const { fetchStart, fetchEnd } = fetchActionCreators;
 
+let activeRequestsCount = 0;
+
 // eslint-disable-next-line consistent-return
 const fetchMiddleware = ({ dispatch }) => next => async action => {
   const { type, payload } = action;
@@ -19,14 +21,14 @@ const fetchMiddleware = ({ dispatch }) => next => async action => {
     meta = {},
   } = payload;
 
-  const {
-    successAction,
-    errorAction,
-  } = meta;
-
+  // TODO: move to users middleware
   const fetchActionsPayload = omit(payload, ['meta.successAction', 'meta.errorAction']);
 
-  dispatch(fetchStart({ payload: fetchActionsPayload }));
+  activeRequestsCount += 1;
+
+  dispatch(fetchStart({
+    payload: { ...fetchActionsPayload, activeRequestsCount },
+  }));
 
   let data;
   let error;
@@ -46,17 +48,24 @@ const fetchMiddleware = ({ dispatch }) => next => async action => {
       ? `${config.method.toUpperCase()} ${config.url} -> ${response.status} (${response.statusText})`
       : fetchError.toString();
 
-    error = { error, msg };
+    error = { error: fetchError, msg };
   }
 
-  dispatch(fetchEnd({ payload: fetchActionsPayload, data, error }));
+  activeRequestsCount = activeRequestsCount > 0 ? activeRequestsCount - 1 : 0;
 
-  if (!error && successAction) {
-    dispatch(successAction({ data }));
+  dispatch(fetchEnd({
+    payload: { ...fetchActionsPayload, activeRequestsCount },
+    data,
+    error,
+  }));
+
+  // TODO: move to users middleware
+  if (!error && meta.successAction) {
+    dispatch(meta.successAction({ data }));
   }
 
-  if (error && errorAction) {
-    dispatch(errorAction({ error }));
+  if (error && meta.errorAction) {
+    dispatch(meta.errorAction({ error }));
   }
 };
 

@@ -11,13 +11,13 @@ const reduxThunkMiddleware = require('redux-thunk').default;
 const { loggerMiddleware, fetchMiddleware, multiMiddleware } = require('./middleware');
 
 const { usersActionCreators, usersReducer } = require('./users');
-const { fetchReducer } = require('./fetch');
 const { uiNotificationsReducer } = require('./ui-notifications');
+const { uiLoaderReducer, uiLoaderMiddleware } = require('./ui-loader');
 
 const reducer = combineReducers({
   users: usersReducer,
-  fetch: fetchReducer,
   notifications: uiNotificationsReducer,
+  loader: uiLoaderReducer,
 });
 
 const store = createStore(
@@ -27,6 +27,7 @@ const store = createStore(
     reduxThunkMiddleware,
     multiMiddleware,
     loggerMiddleware,
+    uiLoaderMiddleware,
     fetchMiddleware,
   ),
 );
@@ -39,6 +40,6 @@ console.log('___________________________________________________________________
 
 // store.subscribe(() => console.log('Store updated!', store.getState()));
 
-fetchUsers({ limit: 3 });
+fetchUsers({ limit: 2 });
 fetchUser({ id: 1 });
 fetchUser({ id: 42 }); // does not exist
