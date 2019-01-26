@@ -1,4 +1,4 @@
-const ACTIONS_MESSAGES = {
+const ACTIONS_UI_NOTIFICATIONS = {
   SHOW_INFO: Symbol('show info message'),
   HIDE_INFO: Symbol('hide info message'),
   SHOW_ERROR: Symbol('show error message'),
@@ -6,19 +6,21 @@ const ACTIONS_MESSAGES = {
 };
 
 const hideMessage = ({ type }) => {
-  const actionType = type === 'error' ? ACTIONS_MESSAGES.HIDE_ERROR : ACTIONS_MESSAGES.HIDE_INFO;
+  const actionType = type === 'error' ? ACTIONS_UI_NOTIFICATIONS.HIDE_ERROR : ACTIONS_UI_NOTIFICATIONS.HIDE_INFO;
   return {
     type: actionType,
   };
 };
 
 const timeoutIds = {
-  [ACTIONS_MESSAGES.SHOW_INFO]: null,
-  [ACTIONS_MESSAGES.SHOW_ERROR]: null,
+  [ACTIONS_UI_NOTIFICATIONS.SHOW_INFO]: null,
+  [ACTIONS_UI_NOTIFICATIONS.SHOW_ERROR]: null,
 };
 
 const showMessage = ({ info, error, duration }) => {
-  const actionType = error ? ACTIONS_MESSAGES.SHOW_ERROR : ACTIONS_MESSAGES.SHOW_INFO;
+  const actionType = error
+    ? ACTIONS_UI_NOTIFICATIONS.SHOW_ERROR
+    : ACTIONS_UI_NOTIFICATIONS.SHOW_INFO;
 
   if (timeoutIds[actionType]) {
     clearTimeout(timeoutIds[actionType]);
@@ -47,8 +49,8 @@ const showMessage = ({ info, error, duration }) => {
 };
 
 module.exports = {
-  ACTIONS_MESSAGES,
-  messagesActionCreators: {
+  ACTIONS_UI_NOTIFICATIONS,
+  uiNotificationsActionCreators: {
     hideMessage,
     showMessage,
   },

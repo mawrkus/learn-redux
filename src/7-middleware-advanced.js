@@ -12,12 +12,12 @@ const { loggerMiddleware, fetchMiddleware, multiMiddleware } = require('./middle
 
 const { usersActionCreators, usersReducer } = require('./users');
 const { fetchReducer } = require('./fetch');
-const { messagesReducer } = require('./messages');
+const { uiNotificationsReducer } = require('./ui-notifications');
 
 const reducer = combineReducers({
   users: usersReducer,
   fetch: fetchReducer,
-  messages: messagesReducer,
+  notifications: uiNotificationsReducer,
 });
 
 const store = createStore(

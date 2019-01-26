@@ -1,7 +1,7 @@
 const { ACTIONS_FETCH } = require('../fetch');
-const { messagesActionCreators } = require('../messages');
+const { uiNotificationsActionCreators } = require('../ui-notifications');
 
-const { showMessage } = messagesActionCreators;
+const { showMessage } = uiNotificationsActionCreators;
 
 const ACTIONS_USERS = {
   UPDATE_USERS_LIST: Symbol('update users list'),
