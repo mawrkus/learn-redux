@@ -172,7 +172,7 @@ const store = createStore(reducer);
 // ...
 ```
 
-Redux provides the built-in function `combineReducers()`:
+Redux provides the built-in function `combineReducers`:
 
 ```javascript
 const { createStore, combineReducers } = require('redux');
@@ -248,7 +248,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 
 #### Async actions
 
-- `store.dispatch()` always sends **synchronously** an action to the store's reducer.
+- `store.dispatch(...)` always sends **synchronously** an action to the store's reducer.
 - It expects actions to be **plain objects** ready to be consumed by the reducer.
 
 To dispatch **asynchronous actions** (like fetching data from an API), we can use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
@@ -326,9 +326,13 @@ You can even write a your own custom middleware... More below!
 ### Middleware
 
 - Middleware provide **extension points** between dispatching an action and the moment it reaches the reducer.
-- They are higher-order functions that compose a dispatch function to return a new dispatch function.
+- They form a pipeline around `dispatch` and can **modify / intercept / interact** with any action coming through that pipeline.
 
 ![Redux Middleware](./img/redux-middleware.png)
+
+- They are **higher-order functions** that compose a `dispatch` function to return a new `dispatch` function.
+- They are given references to the store's `dispatch` and `getState` methods.
+- They are a place of choice for managing all the **side effects** (async behavior, ...).
 
 Some usages:
 
@@ -336,8 +340,6 @@ Some usages:
 - centralizing analytics
 - centralizing API requests
 - throttling/debouncing actions
-
-They are a place of choice for managing all the side effects.
 
 ```javascript
 // ...
