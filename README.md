@@ -121,7 +121,7 @@ store.dispatch({ type: 'LIKE' });
 
 ## Best practices
 
-### Combining multiple reducers
+### Combine multiple reducers
 
 As the app grows, it's good practice to split the root reducer into smaller reducers that operates independently on the different parts of the state tree and to combine them.
 
@@ -216,7 +216,7 @@ const store = createStore(reducer);
 // ...
 ```
 
-### Using action creators
+### Use action creators
 
 - An **action creator** is a (factory) function that creates an action.
 - Calling an action creator only produces an action, it does not dispatch it.
@@ -323,7 +323,7 @@ You can even write a your own custom middleware... More below!
 4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
 5. **Testability and flexibility** -> if a component only ever calls a function passed to it rather than explicitly referencing `dispatch`, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
 
-### Middleware
+### Use middleware
 
 - Middleware provide **extension points** between dispatching an action and the moment it reaches the reducer.
 - They form a pipeline around `dispatch` and can **modify / intercept / interact** with any action coming through that pipeline.
@@ -363,7 +363,7 @@ const store = createStore(
 // ...
 ```
 
-#### Action processing patterns
+### Be aware of the actions processing patterns
 
 Actions can be divided in 3 categories:
 
@@ -371,7 +371,18 @@ Actions can be divided in 3 categories:
 2. **Command actions** -> ask for something, start a process (fetch some data from an API, ...)
 3. **Document actions** -> has the final structure of the data and is the only one that the reducer processes
 
-### Higher order reducers or reducer enhancers
+Useful patterns for processing actions in middleware:
+
+- **filter** (process only a certain kind of actions)
+- **map** (transform an action to a different one)
+- **split** (dispatch many actions out of a single one)
+- **aggregate** (many actions are combined to a single one)
+- **compose** (many successive actions are composed to a single one)
+- **enrich** (add data/metadata to the action being processed)
+- **normalize** (transforms the action data to a normalized form)
+- **translate**
+
+### Use higher order reducers (reducer enhancers)
 
 A **reducer enhancer** (or a **higher order reducer**) is a function that takes a reducer, and returns a new reducer that is able to handle new actions, or to hold more state, delegating control to the inner reducer for the actions it doesn't understand.
 
@@ -403,7 +414,7 @@ function combineReducers(reducers) {
 - undo/redo/clear history
 - ...
 
-### React integration
+## React integration
 
 ;)
 
