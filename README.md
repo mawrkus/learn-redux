@@ -323,9 +323,44 @@ You can even write a your own custom middleware...
 4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
 5. **Testability and flexibility** -> if a component only ever calls a function passed to it rather than explicitly referencing `dispatch`, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
 
+#### Dispatching actions: summary
+
+```javaScript
+// ...
+
+// approach 1: define an action object
+store.dispatch({
+  type : COMMENT_ACTIONS.ADD_COMMENT,
+  payload : {
+    text : 'Yiihaaa!! :D',
+  },
+});
+
+// approach 2: use an action creator function
+const actionObject = addComment({ text: 'Yiihaaa!! :D' });
+store.dispatch(actionObject);
+
+// approach 3: directly pass the result the action creator to dispatch()
+store.dispatch(addComment({ text: 'Yiihaaa!! :D' }));
+```
+
+And a last approach:
+
+```javaScript
+const { bindActionCreators } = require('redux');
+
+// ...
+
+// approach 4: pre-bind the action creator to automatically call dispatch
+const boundAddComment = bindActionCreator(addComment, store.dispatch);
+boundAddComment({ text: 'Yiihaaa!! :D' });
+
+// ...
+```
+
 ### Middleware
 
-- They provide **extension points** between dispatching an action and the moment it reaches the reducer.
+- Middleware provide **extension points** between dispatching an action and the moment it reaches the reducer.
 - They are higher-order functions that compose a dispatch function to return a new dispatch function.
 
 ![Redux Middleware](./img/redux-middleware.png)
