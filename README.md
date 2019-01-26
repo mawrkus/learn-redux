@@ -393,11 +393,22 @@ Transfer data (payload -> state).
 - **filter** -> process only certain kind of actions
 - **map** -> transform an action to another one based on some criteria
 - **split** -> dispatch many actions out of a single one
+
 - **aggregate** -> many actions are combined to a single one
 - **compose** -> many successive actions are composed to  a single one
 - **enrich** -> add data/metadata to the action being processed
 - **normalize** -> transforms the action data to  normalized form
 - **translate**
+
+For example:
+
+```
+Fetch users [C] ->  Fetch request [C] ->  Fetch start [E] -> (...)
+                                      └>  Show loader [D]
+
+(...)           ->  Fetch success [E] ->  Update users [D]
+                                      └>  Hide loader [D]
+```
 
 ### Use higher order reducers (reducer enhancers)
 
