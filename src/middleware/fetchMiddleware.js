@@ -9,7 +9,7 @@ const { fetchStart, fetchEnd } = fetchActionCreators;
 const fetchMiddleware = ({ dispatch }) => next => async action => {
   const { type, payload } = action;
 
-  if (type !== ACTIONS_FETCH.FETCH_REQUEST) {
+  if (type !== ACTIONS_FETCH.REQUEST) {
     return next(action);
   }
 
@@ -37,9 +37,16 @@ const fetchMiddleware = ({ dispatch }) => next => async action => {
       url,
     });
 
+    // TODO: normalize data with normalizr before dispatching?
     data = response.data; // eslint-disable-line prefer-destructuring
   } catch (fetchError) {
-    error = fetchError;
+    const { config, response } = fetchError;
+
+    const msg = response
+      ? `${config.method.toUpperCase()} ${config.url} -> ${response.status} (${response.statusText})`
+      : fetchError.toString();
+
+    error = { error, msg };
   }
 
   dispatch(fetchEnd({ payload: fetchActionsPayload, data, error }));

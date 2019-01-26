@@ -323,7 +323,6 @@ You can even write a your own custom middleware...
 4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
 5. **Testability and flexibility** -> if a component only ever calls a function passed to it rather than explicitly referencing `dispatch`, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
 
-
 ### Middleware
 
 - They provide **extension points** between dispatching an action and the moment it reaches the reducer.

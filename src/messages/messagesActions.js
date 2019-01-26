@@ -1,30 +1,55 @@
 const ACTIONS_MESSAGES = {
-  DISPLAY_INFO: Symbol('display info message'),
-  DISPLAY_ERROR: Symbol('display error message'),
+  SHOW_INFO: Symbol('show info message'),
+  HIDE_INFO: Symbol('hide info message'),
+  SHOW_ERROR: Symbol('show error message'),
+  HIDE_ERROR: Symbol('hide error message'),
 };
 
-const displayInfoMsg = ({ text }) => {
+const hideMessage = ({ type }) => {
+  const actionType = type === 'error' ? ACTIONS_MESSAGES.HIDE_ERROR : ACTIONS_MESSAGES.HIDE_INFO;
   return {
-    type: ACTIONS_MESSAGES.DISPLAY_INFO,
-    payload: {
-      text,
-    },
+    type: actionType,
   };
 };
 
-const displayErrorMsg = ({ text }) => {
-  return {
-    type: ACTIONS_MESSAGES.DISPLAY_ERROR,
+const timeoutIds = {
+  [ACTIONS_MESSAGES.SHOW_INFO]: null,
+  [ACTIONS_MESSAGES.SHOW_ERROR]: null,
+};
+
+const showMessage = ({ info, error, duration }) => {
+  const actionType = error ? ACTIONS_MESSAGES.SHOW_ERROR : ACTIONS_MESSAGES.SHOW_INFO;
+
+  if (timeoutIds[actionType]) {
+    clearTimeout(timeoutIds[actionType]);
+    timeoutIds[actionType] = null;
+  }
+
+  const actions = [{
+    type: actionType,
     payload: {
-      text,
+      text: error || info,
     },
-  };
+  }];
+
+  if (duration > 0) {
+    const hideP = new Promise((resolve) => {
+      timeoutIds[actionType] = setTimeout(() => resolve(hideMessage({
+        type: error ? 'error' : 'info',
+      })),
+      duration);
+    });
+
+    actions.push(hideP);
+  }
+
+  return actions;
 };
 
 module.exports = {
   ACTIONS_MESSAGES,
   messagesActionCreators: {
-    displayInfoMsg,
-    displayErrorMsg,
+    hideMessage,
+    showMessage,
   },
 };

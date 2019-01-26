@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+
 const ACTIONS_COMMENTS = {
   ADD: Symbol('add comment'),
 };
@@ -11,17 +13,18 @@ const addComment = ({ text }) => {
   };
 };
 
+const wait = promisify(setTimeout);
 let commentIndex = 0;
 
 const addCommentAsync = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const ms = Math.ceil(Math.random() * 1000);
+    await wait(ms);
 
-    setTimeout(() => {
-      const comment = ['Wreeealy interesting!', 'Boom.'][commentIndex % 2];
-      dispatch(addComment({ text: `${comment} (async after ${ms}ms)` }));
-      commentIndex += 1;
-    }, ms);
+    const comment = ['Wreeealy interesting!', 'Boom.'][commentIndex % 2];
+    dispatch(addComment({ text: `${comment} (async after ${ms}ms)` }));
+
+    commentIndex += 1;
   };
 };
 

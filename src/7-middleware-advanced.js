@@ -8,7 +8,7 @@ const {
 // redux-thunk >= 2.x in CommonJS environment
 const reduxThunkMiddleware = require('redux-thunk').default;
 
-const { loggerMiddleware, fetchMiddleware } = require('./middleware');
+const { loggerMiddleware, fetchMiddleware, multiMiddleware } = require('./middleware');
 
 const { usersActionCreators, usersReducer } = require('./users');
 const { fetchReducer } = require('./fetch');
@@ -25,6 +25,7 @@ const store = createStore(
   applyMiddleware(
     // Order IS important
     reduxThunkMiddleware,
+    multiMiddleware,
     loggerMiddleware,
     fetchMiddleware,
   ),

@@ -1,5 +1,5 @@
 const ACTIONS_FETCH = {
-  FETCH_REQUEST: Symbol('fetch request'),
+  REQUEST: Symbol('fetch request'),
   START: Symbol('fetch start'),
   END: Symbol('fetch end'),
 };
