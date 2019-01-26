@@ -4,6 +4,16 @@ const ACTIONS_FETCH = {
   END: Symbol('fetch end'),
 };
 
+const fetchRequest = ({ url, meta } = {}) => {
+  return {
+    type: ACTIONS_FETCH.REQUEST,
+    payload: {
+      url,
+      meta,
+    },
+  };
+};
+
 const fetchStart = ({ payload } = {}) => {
   return {
     type: ACTIONS_FETCH.START,
@@ -23,6 +33,7 @@ const fetchEnd = ({ payload, data, error } = {}) => {
 module.exports = {
   ACTIONS_FETCH,
   fetchActionCreators: {
+    fetchRequest,
     fetchStart,
     fetchEnd,
   },

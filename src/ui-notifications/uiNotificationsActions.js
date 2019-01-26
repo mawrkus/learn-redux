@@ -1,8 +1,8 @@
 const ACTIONS_UI_NOTIFICATIONS = {
-  SHOW_INFO: Symbol('show info message'),
-  HIDE_INFO: Symbol('hide info message'),
-  SHOW_ERROR: Symbol('show error message'),
-  HIDE_ERROR: Symbol('hide error message'),
+  SHOW_INFO: Symbol('show info notification'),
+  HIDE_INFO: Symbol('hide info notification'),
+  SHOW_ERROR: Symbol('show error notification'),
+  HIDE_ERROR: Symbol('hide error notification'),
 };
 
 const hideMessage = ({ type }) => {
