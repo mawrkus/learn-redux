@@ -313,7 +313,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 
 There is a rich ecosystem of middleware to deal with async actions: `redux-promise`, `redux-promise-middleware`, `redux-observable`, `redux-saga` (to build more complex asynchronous actions) or `redux-pack`.
 
-You can even write a your own custom middleware...
+You can even write a your own custom middleware... More below!
 
 #### Why using actions creators?
 
@@ -322,41 +322,6 @@ You can even write a your own custom middleware...
 3. **Brevity and DRY** -> there could be some larger logic that goes into preparing the action object, rather than just immediately returning it.
 4. **Encapsulation and consistency** -> consistently using action creators means that a component doesn't have to know any of the details of creating the action, and whether it's a simple "return the action object" function or a complex thunk function with numerous async calls.
 5. **Testability and flexibility** -> if a component only ever calls a function passed to it rather than explicitly referencing `dispatch`, it becomes easy to write tests for the component that pass in a mock version of the function instead. It also enables reusing the component in another situation, or even with something other than Redux.
-
-#### Dispatching actions: summary
-
-```javaScript
-// ...
-
-// approach 1: define an action object
-store.dispatch({
-  type : COMMENT_ACTIONS.ADD_COMMENT,
-  payload : {
-    text : 'Yiihaaa!! :D',
-  },
-});
-
-// approach 2: use an action creator function
-const actionObject = addComment({ text: 'Yiihaaa!! :D' });
-store.dispatch(actionObject);
-
-// approach 3: directly pass the result the action creator to dispatch()
-store.dispatch(addComment({ text: 'Yiihaaa!! :D' }));
-```
-
-And a last approach:
-
-```javaScript
-const { bindActionCreators } = require('redux');
-
-// ...
-
-// approach 4: pre-bind the action creator to automatically call dispatch
-const boundAddComment = bindActionCreator(addComment, store.dispatch);
-boundAddComment({ text: 'Yiihaaa!! :D' });
-
-// ...
-```
 
 ### Middleware
 
@@ -370,7 +335,7 @@ Some usages:
 - centralized actions logging
 - centralizing analytics
 - centralizing API requests
-- throttling actions
+- throttling/debouncing actions
 
 They are a place of choice for managing all the side effects.
 
