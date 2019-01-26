@@ -332,7 +332,7 @@ You can even write a your own custom middleware... More below!
 
 - They are **higher-order functions** that compose a `dispatch` function to return a new `dispatch` function.
 - They are given references to the store's `dispatch` and `getState` methods.
-- They are a place of choice for managing all the **side effects** (async behavior, ...), even the whole app logic (alternative = action creators).
+- They are a place of choice for managing all the **side effects** (async behavior, ...), even **all the app logic** (alternative = action creators).
 
 **Some usages:**
 
