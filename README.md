@@ -220,7 +220,7 @@ const store = createStore(reducer);
 
 - An **action creator** is a (factory) function that creates an action.
 - Calling an action creator only produces an action, it does not dispatch it.
-- If an action creator needs to read the current state, to perform an API call, or to cause a side effect, it should return an **async action** instead of an action (see below).
+- If an action creator needs to read the current state, to perform an API call, or to cause a side effect, it should return an **async action** (function) instead of an action (see next section).
 
 #### Sync actions
 
@@ -287,7 +287,7 @@ const reduxThunkMiddleware = require('redux-thunk').default;
 
 const { addComment } = require('./comments');
 
-// Function executed by the Redux Thunk middleware
+// function executed by the Redux Thunk middleware
 const addCommentAsync = (text) => {
   // the async action creator automatically receives dispatch() and getState()
   return (dispatch, getState) => {
@@ -334,12 +334,13 @@ You can even write a your own custom middleware... More below!
 - They are given references to the store's `dispatch` and `getState` methods.
 - They are a place of choice for managing all the **side effects** (async behavior, ...).
 
-Some usages:
+**Some usages:**
 
 - centralized actions logging
 - centralizing analytics
 - centralizing API requests
 - throttling/debouncing actions
+- ...
 
 ```javascript
 // ...
@@ -362,9 +363,13 @@ const store = createStore(
 // ...
 ```
 
-#### Types of middleware
+#### Action processing patterns
 
--
+Actions can be divided in 3 categories:
+
+1. **Event actions** -> notification that something is happening (app went offline, ...)
+2. **Command actions** -> ask for something, start a process (fetch some data from an API, ...)
+3. **Document actions** -> has the final structure of the data and is the only one that the reducer processes
 
 ### Higher order reducers or reducer enhancers
 
@@ -393,10 +398,10 @@ function combineReducers(reducers) {
 }
 ```
 
-Some usages:
+**Some usages:**
 
 - undo/redo/clear history
--
+- ...
 
 ### React integration
 
@@ -408,3 +413,4 @@ Some usages:
 - Getting Started with Redux videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
 - Idiomatic Redux (series of really good blog posts from a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
 - Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
+- Advanced Redux: Design Patterns and Practices -> https://www.youtube.com/watch?v=5gl3cCB_26M
