@@ -365,7 +365,7 @@ const store = createStore(
 
 ### Think in actions processing patterns
 
-Actions can be divided in 3 categories:
+Actions can be divided in 3 categories: **event** actions, **command** actions and **document** actions.
 
 #### A. Event actions
 
@@ -383,20 +383,20 @@ Ask for something -> start a process (fetch some data from an API, ...).
 
 #### C.Document actions
 
-Transfer data.
+Transfer data (payload -> state).
 
 - the only one that will be processed by the reducer
 - don't expect a reply action
 
-Useful patterns for processing actions in middleware:
+#### Routing patterns
 
-- **filter** (process only certain kind of actions)
-- **map** (transform an action to another one)
-- **split** (dispatch many actions out of a single one)
-- **aggregate** (many actions are combined to a single one)
-- **compose** (many successive actions are composed to a single one)
-- **enrich** (add data/metadata to the action being processed)
-- **normalize** (transforms the action data to a normalized form)
+- **filter** -> process only certain kind of actions
+- **map** -> transform an action to another one based on some criteria
+- **split** -> dispatch many actions out of a single one
+- **aggregate** -> many actions are combined to a single one
+- **compose** -> many successive actions are composed to  a single one
+- **enrich** -> add data/metadata to the action being processed
+- **normalize** -> transforms the action data to  normalized form
 - **translate**
 
 ### Use higher order reducers (reducer enhancers)
