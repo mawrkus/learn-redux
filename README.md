@@ -332,7 +332,7 @@ You can even write a your own custom middleware... More below!
 
 - They are **higher-order functions** that compose a `dispatch` function to return a new `dispatch` function.
 - They are given references to the store's `dispatch` and `getState` methods.
-- They are a place of choice for managing all the **side effects** (async behavior, ...).
+- They are a place of choice for managing all the **side effects** (async behavior, ...), even the whole app logic (alternative = action creators).
 
 **Some usages:**
 
@@ -363,18 +363,35 @@ const store = createStore(
 // ...
 ```
 
-### Be aware of the actions processing patterns
+### Think in actions processing patterns
 
 Actions can be divided in 3 categories:
 
-1. **Event actions** -> notification that something is happening (app went offline, ...)
-2. **Command actions** -> ask for something, start a process (fetch some data from an API, ...)
-3. **Document actions** -> has the final structure of the data and is the only one that the reducer processes
+#### A. Event actions
+
+Notify of a change (app went offline, ...).
+
+- could be processed by more than one handler
+- don't expect any reply action
+
+#### B. Command actions
+
+Ask for something -> start a process (fetch some data from an API, ...).
+
+- processed by one handler
+- expect a reply action
+
+#### C.Document actions
+
+Transfer data.
+
+- the only one that will be processed by the reducer
+- don't expect a reply action
 
 Useful patterns for processing actions in middleware:
 
-- **filter** (process only a certain kind of actions)
-- **map** (transform an action to a different one)
+- **filter** (process only certain kind of actions)
+- **map** (transform an action to another one)
 - **split** (dispatch many actions out of a single one)
 - **aggregate** (many actions are combined to a single one)
 - **compose** (many successive actions are composed to a single one)
