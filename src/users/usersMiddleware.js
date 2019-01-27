@@ -15,7 +15,8 @@ const usersMiddleware = ({ dispatch }) => next => action => {
 
   next(action);
 
-  if (type !== ACTIONS_FETCH.END || meta.resource !== 'users') {
+  const isFetchComplete = type === ACTIONS_FETCH.END && meta.resource === 'users';
+  if (!isFetchComplete) {
     return;
   }
 
