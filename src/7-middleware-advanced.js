@@ -6,7 +6,7 @@ const {
 } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const reduxThunkMiddleware = require('redux-thunk').default;
+const { default: reduxThunkMiddleware } = require('redux-thunk');
 
 const { loggerMiddleware, fetchMiddleware, multiMiddleware } = require('./middleware');
 

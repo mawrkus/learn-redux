@@ -3,6 +3,7 @@
 <img style="float:right; margin:0 0 0 12px;height:64px;" src="./img/redux-logo.png" alt="Redux logo">
 
 > Redux is a predictable state container for JavaScript apps.
+
 https://redux.js.org
 
 ## Installation
@@ -27,7 +28,7 @@ yarn add redux
 
 **Benefits:**
 
-- Apps more predictable (single source of truth, unidirectional data flow).
+- Apps are more predictable (single source of truth, unidirectional data flow).
 - Traceability of every state mutations -> undo/redo is trivial (aka "time travel debugging").
 - The state can be easily persisted and restored (from server or any storage).
 - It's easier to debug/inspect a single state tree.
@@ -169,7 +170,14 @@ const reducer = (state = { reactions: { likes: 0, dislikes: 0 }, comments: [] },
 
 const store = createStore(reducer);
 
-// ...
+store.dispatch({ type: 'LIKE' });
+
+store.dispatch({
+  type: 'COMMENT',
+  payload: {
+    text: 'Nice! +1',
+  },
+});
 ```
 
 Redux provides the built-in function `combineReducers`:
@@ -177,63 +185,44 @@ Redux provides the built-in function `combineReducers`:
 ```javascript
 const { createStore, combineReducers } = require('redux');
 
-const reactions = (state = { likes: 0, dislikes: 0 }, action) => {
-  switch (action.type) {
-    case 'LIKE':
-      return {
-        ...state,
-        likes: state.likes + 1,
-      };
+// const reactionsReducer = (...) => { ... }
+// const commentsReducer = (...) => { ... }
 
-    case 'DISLIKE':
-      return {
-        ...state,
-        dislikes: state.dislikes + 1,
-      };
-
-    default:
-      return state;
-  }
-};
-
-const comments = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_COMMENT':
-      return [
-        ...state,
-        action.payload.text,
-      ];
-
-    default:
-      return state;
-  }
-};
-
-const reducer = combineReducers({ reactions, comments });
+const reducer = combineReducers({
+  reactions: reactionsReducer,
+  comments: commentsReducer,
+});
 
 const store = createStore(reducer);
 
-// ...
+store.dispatch({ type: 'LIKE' });
+
+store.dispatch({
+  type: 'COMMENT',
+  payload: {
+    text: 'Nice! +1',
+  },
+});
 ```
 
 ### Use action creators
 
-- An **action creator** is a (factory) function that creates an action.
+- An **action creator** is simply a function that creates an action.
 - Calling an action creator only produces an action, it does not dispatch it.
-- If an action creator needs to read the current state, to perform an API call, or to cause a side effect, it should return an **async action** (function) instead of an action (see next section).
+- If an action creator needs to read the current state, to perform an API call, or to cause a side effect, it should return an **async action** (function) instead of an action (see "Async actions").
 
 #### Sync actions
 
 ```javascript
 // ...
 
-const COMMENT_ACTIONS = {
+const ACTIONS = {
   ADD_COMMENT: Symbol('add comment'),
 };
 
 function addComment(text) {
   return {
-    type: COMMENT_ACTIONS.ADD_COMMENT,
+    type: ACTIONS.ADD_COMMENT,
     payload: {
       text,
     },
@@ -261,7 +250,7 @@ yarn add redux-thunk
 const { createStore, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const reduxThunkMiddleware = require('redux-thunk').default;
+const { default: reduxThunkMiddleware } = require('redux-thunk');
 
 // ...
 
@@ -281,18 +270,18 @@ const store = createStore(
 const { createStore, applyMiddleware } = require('redux');
 
 // redux-thunk >= 2.x in CommonJS environment
-const reduxThunkMiddleware = require('redux-thunk').default;
+const { default: reduxThunkMiddleware } = require('redux-thunk');
 
 // ...
 
-const { addComment } = require('./comments');
+const { addComment } = require('./commentsActions');
 
 // function executed by the Redux Thunk middleware
 const addCommentAsync = (text) => {
-  // the async action creator automatically receives dispatch() and getState()
+  // the async action creator, it automatically receives dispatch() and getState()
   return (dispatch, getState) => {
     setTimeout(() => {
-      // we can now dispatch actions asynchronously, based on the current state
+      // we can now dispatch actions asynchronously, based on the current state if we want
       dispatch(addComment(text));
     }, 1000);
   };
@@ -313,7 +302,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 
 There is a rich ecosystem of middleware to deal with async actions: `redux-promise`, `redux-promise-middleware`, `redux-observable`, `redux-saga` (to build more complex asynchronous actions) or `redux-pack`.
 
-You can even write a your own custom middleware... More below!
+You can even write a your own custom middleware... (see "Use middleware")
 
 #### Why using actions creators?
 
@@ -332,7 +321,6 @@ You can even write a your own custom middleware... More below!
 
 - They are **higher-order functions** that compose a `dispatch` function to return a new `dispatch` function.
 - They are given references to the store's `dispatch` and `getState` methods.
-- They are a place of choice for managing all the **side effects** (async behavior, ...), even **all the app logic** (alternative = action creators).
 
 **Some usages:**
 
@@ -342,18 +330,20 @@ You can even write a your own custom middleware... More below!
 - throttling/debouncing actions
 - ...
 
+Example:
+
 ```javascript
 // ...
 
 const loggerMiddleware = ({ getState, dispatch }) => next => action => {
   console.log('DISPATCH "%s" ->', action.type, action);
-  next(action);
+  next(action); // pass the action to the next middleware
 };
 
 const store = createStore(
   reducer,
   applyMiddleware(
-    // Order IS important!
+    // order IS important!
     reduxThunkMiddleware,
     loggerMiddleware,
     // ...
@@ -363,9 +353,11 @@ const store = createStore(
 // ...
 ```
 
+Middleware are a good choice for managing all the **side effects** (async behavior, ...) and even to place **all the app logic** (alternative = action creators).
+
 ### Think in actions processing patterns
 
-Actions can be divided in 3 categories: **event** actions, **command** actions and **document** actions.
+Actions can be divided in 3 categories: **event**, **command** or **document**.
 
 #### A. Event actions
 
@@ -390,24 +382,70 @@ Transfer data (payload -> state).
 
 #### Routing patterns
 
-- **filter** -> process only certain kind of actions
-- **map** -> transform an action to another one based on some criteria
+- **filter** -> process only certain type of actions
 - **split** -> dispatch many actions out of a single one
+- **map** -> replace an action of a given type by an action of another type, based on some criteria
+- **aggregate** -> combine many actions of the same type to a single action of another type
 
-- **aggregate** -> many actions are combined to a single one
-- **compose** -> many successive actions are composed to  a single one
+#### Transform patterns
+
 - **enrich** -> add data/metadata to the action being processed
-- **normalize** -> transforms the action data to  normalized form
-- **translate**
+- **normalize** -> transform the action data to normalized form (see "Normalize the state shape")
+- **translate** -> translate actions of different types to an action of another type, based on its type only
 
 For example:
 
-```
+```text
 Fetch users [C] ->  Fetch request [C] ->  Fetch start [E] -> (...)
                                       └>  Show loader [D]
 
 (...)           ->  Fetch success [E] ->  Update users [D]
                                       └>  Hide loader [D]
+```
+
+### Normalize the state shape
+
+To help keeping all parts of the state in sync:
+
+```javascript
+const state = {
+  users: [{
+    id: 1,
+    name: 'Carles',
+  }, {
+    id: 2,
+    name: 'Joan',
+  }, {
+    id: 3,
+    name: 'Jordi',
+  }],
+  admin: {
+    id: 2,
+    name: 'Joan',
+  },
+};
+```
+
+vs
+
+```javascript
+const state = {
+  users: {
+    1: {
+      name: 'Carles',
+      email: 'carles@redux.cat',
+    },
+    2: {
+      name: 'Joan',
+      email: 'joan@redux.cat',
+    },
+    3: {
+      name: 'Jordi',
+      email: 'jordi@redux.cat',
+    },
+  },
+  admin: 2,
+};
 ```
 
 ### Use higher order reducers (reducer enhancers)
@@ -417,7 +455,7 @@ A **reducer enhancer** (or a **higher order reducer**) is a function that takes 
 ```javascript
 function doNothingWith(reducer) {
   return function(state, action) {
-    // Just call the passed reducer
+    // just call the passed reducer
     return reducer(state, action)
   }
 }
@@ -429,7 +467,7 @@ function doNothingWith(reducer) {
 function combineReducers(reducers) {
   return function(state = {}, action) {
     return Object.keys(reducers).reduce((nextState, key) => {
-      // Call every reducer with the part of the state it manages
+      // call every reducer with the part of the state it manages
       nextState[key] = reducers[key](state[key], action)
       return nextState
     }, {})
@@ -448,8 +486,10 @@ function combineReducers(reducers) {
 
 ## Resources
 
-- Redux amazing docs -> https://redux.js.org/introduction/getting-started
-- Getting Started with Redux videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
-- Idiomatic Redux (series of really good blog posts from a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
+- Amazing Redux docs! -> https://redux.js.org/introduction/getting-started
+- "Getting Started with Redux" videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
+- Idiomatic Redux (series of really good blog posts by Mark Erikson, a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
+- Practical Redux (again, by Mark Erikson) -> https://blog.isquaredsoftware.com/series/practical-redux/
 - Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
-- Advanced Redux: Design Patterns and Practices -> https://www.youtube.com/watch?v=5gl3cCB_26M
+- Advanced Redux: Design Patterns and Practices (demo of actions processing patterns) -> https://www.youtube.com/watch?v=5gl3cCB_26M
+- React/Redux links (Mark Erikson) -> https://github.com/markerikson/react-redux-links
