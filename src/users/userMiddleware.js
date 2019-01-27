@@ -3,7 +3,7 @@ const { usersActionCreators } = require('./usersActions');
 const { uiNotificationsActionCreators } = require('../ui-notifications/uiNotificationsActions');
 
 const { updateUser } = usersActionCreators;
-const { showMessage } = uiNotificationsActionCreators;
+const { showNotification } = uiNotificationsActionCreators;
 
 const userMiddleware = ({ dispatch }) => next => action => {
   const {
@@ -20,7 +20,7 @@ const userMiddleware = ({ dispatch }) => next => action => {
   }
 
   if (error) {
-    dispatch(showMessage({
+    dispatch(showNotification({
       error: `Error fetching users! ${error.msg}`,
       duration: 2000,
     }));
@@ -28,7 +28,7 @@ const userMiddleware = ({ dispatch }) => next => action => {
   }
 
   dispatch([
-    showMessage({ info: `Success: user id=${meta.id} fetched!`, duration: 50 }),
+    showNotification({ info: `Success: user id=${meta.id} fetched!`, duration: 50 }),
     updateUser({ user: data }),
   ]);
 };
