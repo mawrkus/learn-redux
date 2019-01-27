@@ -9,22 +9,29 @@ const fetchRequest = ({ url, meta } = {}) => {
     type: ACTIONS_FETCH.REQUEST,
     payload: {
       url,
-      meta,
     },
+    meta,
   };
 };
 
-const fetchStart = ({ payload } = {}) => {
+const fetchStart = ({ payload, meta } = {}) => {
   return {
     type: ACTIONS_FETCH.START,
     payload,
+    meta,
   };
 };
 
-const fetchEnd = ({ payload, data, error } = {}) => {
+const fetchEnd = ({
+  payload,
+  meta,
+  data,
+  error,
+} = {}) => {
   return {
     type: ACTIONS_FETCH.END,
     payload,
+    meta,
     data,
     error,
   };

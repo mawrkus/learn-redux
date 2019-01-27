@@ -8,9 +8,16 @@ const {
 // redux-thunk >= 2.x in CommonJS environment
 const { default: reduxThunkMiddleware } = require('redux-thunk');
 
-const { loggerMiddleware, fetchMiddleware, multiMiddleware } = require('./middleware');
+const { loggerMiddleware, multiMiddleware } = require('./middleware');
+const { fetchMiddleware } = require('./fetch');
 
-const { usersActionCreators, usersReducer } = require('./users');
+const {
+  usersActionCreators,
+  usersReducer,
+  usersMiddleware,
+  userMiddleware,
+} = require('./users');
+
 const { uiNotificationsReducer } = require('./ui-notifications');
 const { uiLoaderReducer, uiLoaderMiddleware } = require('./ui-loader');
 
@@ -29,6 +36,8 @@ const store = createStore(
     loggerMiddleware,
     uiLoaderMiddleware,
     fetchMiddleware,
+    usersMiddleware,
+    userMiddleware,
   ),
 );
 

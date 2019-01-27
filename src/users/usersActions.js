@@ -1,8 +1,6 @@
 const { fetchActionCreators } = require('../fetch');
-const { uiNotificationsActionCreators } = require('../ui-notifications');
 
 const { fetchRequest } = fetchActionCreators;
-const { showMessage } = uiNotificationsActionCreators;
 
 const ACTIONS_USERS = {
   UPDATE_USERS_LIST: Symbol('update users list'),
@@ -23,14 +21,6 @@ const fetchUsers = ({ limit }) => {
     url,
     meta: {
       resource: 'users',
-      successAction: ({ data }) => [
-        showMessage({ info: 'Success: users fetched!', duration: 50 }),
-        updateUsers({ users: data }),
-      ],
-      errorAction: ({ error }) => showMessage({
-        error: `Error fetching users! ${error.msg}`,
-        duration: 2000,
-      }),
     },
   });
 };
@@ -50,14 +40,6 @@ const fetchUser = ({ id }) => {
     meta: {
       resource: 'user',
       id,
-      successAction: ({ data }) => [
-        showMessage({ info: 'Success: user fetched!', duration: 50 }),
-        updateUser({ user: data }),
-      ],
-      errorAction: ({ error }) => showMessage({
-        error: `Error fetching user! ${error.msg}`,
-        duration: 2000,
-      }),
     },
   });
 };
@@ -66,6 +48,8 @@ module.exports = {
   ACTIONS_USERS,
   usersActionCreators: {
     fetchUsers,
+    updateUsers,
     fetchUser,
+    updateUser,
   },
 };

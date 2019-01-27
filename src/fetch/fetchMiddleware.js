@@ -1,33 +1,27 @@
 const axios = require('axios');
-const { omit } = require('lodash'); // lodash.omit is buggy!
 
-const { ACTIONS_FETCH, fetchActionCreators } = require('../fetch');
+const { ACTIONS_FETCH, fetchActionCreators } = require('./fetchActions');
 
 const { fetchStart, fetchEnd } = fetchActionCreators;
 
 let activeRequestsCount = 0;
 
-// eslint-disable-next-line consistent-return
 const fetchMiddleware = ({ dispatch }) => next => async action => {
-  const { type, payload } = action;
+  const { type, payload, meta } = action;
+
+  next(action);
 
   if (type !== ACTIONS_FETCH.REQUEST) {
-    return next(action);
+    return;
   }
 
-  const {
-    method = 'GET',
-    url,
-    meta = {},
-  } = payload;
-
-  // TODO: move to users middleware
-  const fetchActionsPayload = omit(payload, ['meta.successAction', 'meta.errorAction']);
+  const { method = 'GET', url } = payload;
 
   activeRequestsCount += 1;
 
   dispatch(fetchStart({
-    payload: { ...fetchActionsPayload, activeRequestsCount },
+    payload: { ...payload, activeRequestsCount },
+    meta,
   }));
 
   let data;
@@ -54,19 +48,11 @@ const fetchMiddleware = ({ dispatch }) => next => async action => {
   activeRequestsCount = activeRequestsCount > 0 ? activeRequestsCount - 1 : 0;
 
   dispatch(fetchEnd({
-    payload: { ...fetchActionsPayload, activeRequestsCount },
+    payload: { ...payload, activeRequestsCount },
+    meta,
     data,
     error,
   }));
-
-  // TODO: move to users middleware
-  if (!error && meta.successAction) {
-    dispatch(meta.successAction({ data }));
-  }
-
-  if (error && meta.errorAction) {
-    dispatch(meta.errorAction({ error }));
-  }
 };
 
 module.exports = fetchMiddleware;
