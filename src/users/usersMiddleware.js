@@ -22,14 +22,19 @@ const usersMiddleware = ({ dispatch }) => next => action => {
 
   if (error) {
     dispatch(showNotification({
-      error: `Error fetching users! ${error.msg}`,
+      type: 'error',
+      text: `Error fetching users! ${error.msg}`,
       duration: 2000,
     }));
     return;
   }
 
   dispatch([
-    showNotification({ info: 'Success: users fetched!', duration: 50 }),
+    showNotification({
+      type: 'info',
+      text: 'Success: users fetched!',
+      duration: 50,
+    }),
     updateUsers({ users: data }),
   ]);
 };

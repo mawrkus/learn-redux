@@ -5,54 +5,30 @@ const ACTIONS_UI_NOTIFICATIONS = {
   HIDE_ERROR: Symbol('hide error notification'),
 };
 
-const hideNotification = ({ type }) => {
-  const actionType = type === 'error' ? ACTIONS_UI_NOTIFICATIONS.HIDE_ERROR : ACTIONS_UI_NOTIFICATIONS.HIDE_INFO;
+const showNotification = ({ type, text, duration }) => {
   return {
-    type: actionType,
+    type: type === 'error'
+      ? ACTIONS_UI_NOTIFICATIONS.SHOW_ERROR
+      : ACTIONS_UI_NOTIFICATIONS.SHOW_INFO,
+    payload: {
+      text,
+      duration,
+    },
   };
 };
 
-const timeoutIds = {
-  [ACTIONS_UI_NOTIFICATIONS.SHOW_INFO]: null,
-  [ACTIONS_UI_NOTIFICATIONS.SHOW_ERROR]: null,
-};
-
-// TODO: use middleware instead?
-const showNotification = ({ info, error, duration }) => {
-  const actionType = error
-    ? ACTIONS_UI_NOTIFICATIONS.SHOW_ERROR
-    : ACTIONS_UI_NOTIFICATIONS.SHOW_INFO;
-
-  if (timeoutIds[actionType]) {
-    clearTimeout(timeoutIds[actionType]);
-    timeoutIds[actionType] = null;
-  }
-
-  const actions = [{
-    type: actionType,
-    payload: {
-      text: error || info,
-    },
-  }];
-
-  if (duration > 0) {
-    const hideP = new Promise((resolve) => {
-      timeoutIds[actionType] = setTimeout(() => resolve(hideNotification({
-        type: error ? 'error' : 'info',
-      })),
-      duration);
-    });
-
-    actions.push(hideP);
-  }
-
-  return actions;
+const hideNotification = ({ type }) => {
+  return {
+    type: type === 'error'
+      ? ACTIONS_UI_NOTIFICATIONS.HIDE_ERROR
+      : ACTIONS_UI_NOTIFICATIONS.HIDE_INFO,
+  };
 };
 
 module.exports = {
   ACTIONS_UI_NOTIFICATIONS,
   uiNotificationsActionCreators: {
-    hideNotification,
     showNotification,
+    hideNotification,
   },
 };

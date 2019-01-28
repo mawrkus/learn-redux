@@ -18,7 +18,7 @@ const {
   userMiddleware,
 } = require('./users');
 
-const { uiNotificationsReducer } = require('./ui-notifications');
+const { uiNotificationsReducer, uiNotificationsMiddleware } = require('./ui-notifications');
 const { uiLoaderReducer, uiLoaderMiddleware } = require('./ui-loader');
 
 const reducer = combineReducers({
@@ -38,6 +38,7 @@ const store = createStore(
     fetchMiddleware,
     usersMiddleware,
     userMiddleware,
+    uiNotificationsMiddleware,
   ),
 );
 
