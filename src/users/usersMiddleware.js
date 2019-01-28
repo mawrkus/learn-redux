@@ -5,6 +5,18 @@ const { uiNotificationsActionCreators } = require('../ui-notifications/uiNotific
 const { updateUsers } = usersActionCreators;
 const { showNotification } = uiNotificationsActionCreators;
 
+const getSuccessMsg = ({ meta }) => {
+  return meta.resource === 'users'
+    ? 'Success: users fetched!'
+    : `Success: user id=${meta.id} fetched!`;
+};
+
+const getErrorMsg = ({ meta, error }) => {
+  return meta.resource === 'users'
+    ? `Error fetching users! ${error.msg}`
+    : `Error fetching user id=${meta.id}! ${error.msg}`;
+};
+
 const usersMiddleware = ({ dispatch }) => next => action => {
   const {
     type,
@@ -15,15 +27,17 @@ const usersMiddleware = ({ dispatch }) => next => action => {
 
   next(action);
 
-  const isFetchComplete = type === ACTIONS_FETCH.END && meta.resource === 'users';
-  if (!isFetchComplete) {
+  const isUsersFetchComplete = type === ACTIONS_FETCH.END
+    && (meta.resource === 'users' || meta.resource === 'user');
+
+  if (!isUsersFetchComplete) {
     return;
   }
 
   if (error) {
     dispatch(showNotification({
       type: 'error',
-      text: `Error fetching users! ${error.msg}`,
+      text: getErrorMsg({ meta, error }),
       duration: 2000,
     }));
     return;
@@ -32,7 +46,7 @@ const usersMiddleware = ({ dispatch }) => next => action => {
   dispatch([
     showNotification({
       type: 'info',
-      text: 'Success: users fetched!',
+      text: getSuccessMsg({ meta }),
       duration: 50,
     }),
     updateUsers({ users: data }),

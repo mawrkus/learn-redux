@@ -15,7 +15,6 @@ const {
   usersActionCreators,
   usersReducer,
   usersMiddleware,
-  userMiddleware,
 } = require('./users');
 
 const { uiNotificationsReducer, uiNotificationsMiddleware } = require('./ui-notifications');
@@ -37,7 +36,6 @@ const store = createStore(
     uiLoaderMiddleware,
     fetchMiddleware,
     usersMiddleware,
-    userMiddleware,
     uiNotificationsMiddleware,
   ),
 );
