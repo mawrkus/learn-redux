@@ -237,7 +237,7 @@ store.dispatch(addComment('Im-pre-ssive!!!'));
 
 #### Async actions
 
-- `store.dispatch(...)` always sends **synchronously** an action to the store's reducer.
+- `dispatch` always sends **synchronously** an action to the store's reducer.
 - It expects actions to be **plain objects** ready to be consumed by the reducer.
 
 To dispatch **asynchronous actions** (like fetching data from an API), we can use the [Redux Thunk middleware](https://github.com/reduxjs/redux-thunk):
@@ -461,7 +461,7 @@ function doNothingWith(reducer) {
 }
 ```
 
-`combineReducers()` is an example of reducer enhancer because it takes reducers and returns a new reducer:
+`combineReducers` is an example of reducer enhancer:
 
 ```javascript
 function combineReducers(reducers) {
