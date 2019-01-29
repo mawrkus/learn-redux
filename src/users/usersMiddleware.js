@@ -2,7 +2,7 @@ const { ACTIONS_FETCH } = require('../fetch/fetchActions');
 const { usersActionCreators } = require('./usersActions');
 const { uiNotificationsActionCreators } = require('../ui-notifications/uiNotificationsActions');
 
-const { updateUsers } = usersActionCreators;
+const { updateUsers, updateUser } = usersActionCreators;
 const { showNotification } = uiNotificationsActionCreators;
 
 const getSuccessMsg = ({ meta }) => {
@@ -15,6 +15,12 @@ const getErrorMsg = ({ meta, error }) => {
   return meta.resource === 'users'
     ? `Error fetching users! ${error.msg}`
     : `Error fetching user id=${meta.id}! ${error.msg}`;
+};
+
+const getUpdateAction = ({ meta, data }) => {
+  return meta.resource === 'users'
+    ? updateUsers({ users: data })
+    : updateUser({ user: data });
 };
 
 const usersMiddleware = ({ dispatch }) => next => action => {
@@ -49,7 +55,7 @@ const usersMiddleware = ({ dispatch }) => next => action => {
       text: getSuccessMsg({ meta }),
       duration: 50,
     }),
-    updateUsers({ users: data }),
+    getUpdateAction({ meta, data }),
   ]);
 };
 
