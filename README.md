@@ -405,24 +405,21 @@ Fetch users [C] ->  Fetch request [C] ->  Fetch start [E] -> (...)
 
 ### Normalize the state shape
 
-To help keeping all parts of the state in sync:
-
 ```javascript
 const state = {
   users: [{
     id: 1,
-    name: 'Carles',
+    name: 'charles',
+    groups: [{ name: 'dogs' }, { name: 'cats' }],
   }, {
     id: 2,
-    name: 'Joan',
+    name: 'jean',
+    groups: [{ name: 'dogs' }],
   }, {
     id: 3,
-    name: 'Jordi',
+    name: 'julien',
+    groups: [{ name: 'cats' }],
   }],
-  admin: {
-    id: 2,
-    name: 'Joan',
-  },
 };
 ```
 
@@ -430,23 +427,44 @@ vs
 
 ```javascript
 const state = {
-  users: {
-    1: {
-      name: 'Carles',
-      email: 'carles@redux.cat',
-    },
-    2: {
-      name: 'Joan',
-      email: 'joan@redux.cat',
-    },
-    3: {
-      name: 'Jordi',
-      email: 'jordi@redux.cat',
-    },
+  users: [{
+    id: 1,
+    name: 'charles',
+    groups: [1, 2],
+  }, {
+    id: 2,
+    name: 'jean',
+    groups: [1],
+  }, {
+    id: 3,
+    name: 'julien',
+    groups: [2],
+  }],
+  groups: {
+    1: { id: 1, name: 'dogs' },
+    2: { id: 2, name: 'cats' },
   },
-  admin: 2,
 };
 ```
+
+Normalizing and indexing by primary key helps keeping all parts of the state in sync. Check [normalizer](https://github.com/paularmstrong/normalizr), a library to help you normalize/denormalize your data.
+
+### Use selectors
+
+- Selectors can compute **derived data**, allowing Redux to store the minimal possible state.
+- Selectors can be **memoized**, thus recomputed only if one of its arguments changes.
+- Selectors are **composable**, they can be used as input to other selectors.
+
+```javascript
+const getGroupsById = (state, ids) => ids.map(id => state.groups[id]);
+
+const getUsersById = (state, ids) => ids.map(id => ({
+  ...state.users[id],
+  groups: getGroupsById(state.users[id].groups),
+}));
+```
+
+Check the [reselect](https://github.com/reduxjs/reselect) library.
 
 ### Use higher order reducers (reducer enhancers)
 
