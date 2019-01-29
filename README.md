@@ -486,10 +486,10 @@ function combineReducers(reducers) {
 
 ## Resources
 
-- Amazing Redux docs! -> https://redux.js.org/introduction/getting-started
-- "Getting Started with Redux" videos (courtesy of Dan Abramov himself) -> https://egghead.io/series/getting-started-with-redux
-- Idiomatic Redux (series of really good blog posts by Mark Erikson, a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
-- Practical Redux (again, by Mark Erikson) -> https://blog.isquaredsoftware.com/series/practical-redux/
+- Amazing Redux official docs! -> https://redux.js.org/introduction/getting-started
+- "Getting Started with Redux" videos (courtesy of @dan_abramov himself) -> https://egghead.io/series/getting-started-with-redux
+- Idiomatic Redux (series of really good blog posts by @acemarke, a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
+- Practical Redux (again, by @acemarke) -> https://blog.isquaredsoftware.com/series/practical-redux/
 - Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
 - Advanced Redux: Design Patterns and Practices (demo of actions processing patterns) -> https://www.youtube.com/watch?v=5gl3cCB_26M
-- React/Redux links (Mark Erikson) -> https://github.com/markerikson/react-redux-links
+- React/Redux links (@acemarke) -> https://github.com/markerikson/react-redux-links
