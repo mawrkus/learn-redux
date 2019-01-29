@@ -5,9 +5,6 @@ const {
   bindActionCreators,
 } = require('redux');
 
-// redux-thunk >= 2.x in CommonJS environment
-const { default: reduxThunkMiddleware } = require('redux-thunk');
-
 const { loggerMiddleware, multiMiddleware } = require('./middleware');
 const { fetchMiddleware } = require('./fetch');
 
@@ -29,8 +26,6 @@ const reducer = combineReducers({
 const store = createStore(
   reducer,
   applyMiddleware(
-    // Order IS important
-    reduxThunkMiddleware,
     multiMiddleware,
     loggerMiddleware,
     uiLoaderMiddleware,
