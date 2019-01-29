@@ -3,8 +3,8 @@ const { fetchActionCreators } = require('../fetch');
 const { fetchRequest } = fetchActionCreators;
 
 const ACTIONS_USERS = {
-  UPDATE_USERS_LIST: Symbol('users:update:list'),
-  UPDATE_USER: Symbol('users:update:single'),
+  UPDATE_USERS: Symbol('users:update'),
+  UPDATE_USER: Symbol('user:update'),
 };
 
 const fetchUsers = ({ limit }) => {
@@ -19,7 +19,7 @@ const fetchUsers = ({ limit }) => {
 };
 
 const updateUsers = ({ users }) => ({
-  type: ACTIONS_USERS.UPDATE_USERS_LIST,
+  type: ACTIONS_USERS.UPDATE_USERS,
   payload: {
     users,
   },

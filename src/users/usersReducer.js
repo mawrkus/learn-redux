@@ -1,17 +1,17 @@
 const { ACTIONS_USERS } = require('./usersActions');
 
-const usersReducer = (state = { all: {}, current: {} }, action) => {
+const usersReducer = (state = { list: {}, selected: {}, groups: {} }, action) => {
   switch (action.type) {
-    case ACTIONS_USERS.UPDATE_USERS_LIST:
+    case ACTIONS_USERS.UPDATE_USERS:
       return {
         ...state,
-        all: action.payload.users.reduce((byId, user) => ({ ...byId, [user.id]: user }), {}),
+        list: action.payload.users.reduce((byId, user) => ({ ...byId, [user.id]: user }), {}),
       };
 
     case ACTIONS_USERS.UPDATE_USER:
       return {
         ...state,
-        current: action.payload.user,
+        selected: action.payload.user,
       };
 
     default:
