@@ -1,6 +1,6 @@
 const ACTIONS_UI_LOADER = {
-  SHOW: Symbol('show loader'),
-  HIDE: Symbol('hide loader'),
+  SHOW: Symbol('loader:show'),
+  HIDE: Symbol('loader:hide'),
 };
 
 const showLoader = () => ({

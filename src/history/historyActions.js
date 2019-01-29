@@ -1,7 +1,7 @@
 const ACTIONS_HISTORY = {
-  UNDO: Symbol('undo'),
-  REDO: Symbol('redo'),
-  CLEAR: Symbol('clear'),
+  UNDO: Symbol('history:undo'),
+  REDO: Symbol('history:redo'),
+  CLEAR: Symbol('history:clear'),
 };
 
 const undo = () => ({

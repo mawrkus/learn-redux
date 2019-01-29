@@ -1,6 +1,6 @@
 const ACTIONS_REACTIONS = {
-  LIKE: Symbol('like'),
-  DISLIKE: Symbol('dislike'),
+  LIKE: Symbol('reactions:like'),
+  DISLIKE: Symbol('reactions:dislike'),
 };
 
 const like = () => {

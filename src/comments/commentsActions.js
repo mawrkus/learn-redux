@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 
 const ACTIONS_COMMENTS = {
-  ADD: Symbol('add comment'),
+  ADD: Symbol('comments:add'),
 };
 
 const addComment = ({ text }) => {

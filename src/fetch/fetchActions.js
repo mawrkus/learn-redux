@@ -1,7 +1,7 @@
 const ACTIONS_FETCH = {
-  REQUEST: Symbol('fetch request'),
-  START: Symbol('fetch start'),
-  END: Symbol('fetch end'),
+  REQUEST: Symbol('fetch:request'),
+  START: Symbol('fetch:start'),
+  END: Symbol('fetch:end'),
 };
 
 const fetchRequest = ({ url, meta } = {}) => {
