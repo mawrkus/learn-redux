@@ -35,7 +35,7 @@ const { addComment, addCommentAsync } = bindActionCreators(commentsActionCreator
 const { undo, redo, clear } = bindActionCreators(historyActionCreators, store.dispatch);
 
 console.log('__________________________________________________________________________________');
-console.log('Demo #8: reducer enhancer');
+console.log('Demo #9: reducer enhancer');
 console.log('__________________________________________________________________________________');
 
 // store.subscribe(() => console.log('Store updated!', store.getState()));

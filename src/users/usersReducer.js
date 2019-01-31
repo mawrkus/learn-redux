@@ -1,6 +1,6 @@
 const { ACTIONS_USERS } = require('./usersActions');
 
-const usersReducer = (state = { list: {}, selected: {}, groups: {} }, action) => {
+const usersReducer = (state = { list: {}, selected: {} }, action) => {
   switch (action.type) {
     case ACTIONS_USERS.UPDATE_USERS:
       return {

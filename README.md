@@ -304,7 +304,7 @@ There is a rich ecosystem of middleware to deal with async actions: `redux-promi
 
 You can even write a your own custom middleware... (see "Use middleware")
 
-#### Why using actions creators?
+#### Why using actions creators
 
 1. **Basic abstraction** -> rather than writing action type strings in every component that needs to create the same type of action, put the logic for creating that action in one place.
 2. **Documentation** -> the parameters of the function act as a guide for what data is needed to go into the action.
@@ -447,13 +447,21 @@ const state = {
 };
 ```
 
-Normalizing and indexing by primary key helps keeping all parts of the state in sync. Check [normalizer](https://github.com/paularmstrong/normalizr), a library to help you normalize/denormalize your data.
+Normalizing and indexing by primary key helps keeping all parts of the state in sync. The [normalizer](https://github.com/paularmstrong/normalizr) library can help you normalize/denormalize your data.
 
 ### Use selectors
 
-- Selectors can compute **derived data**, allowing Redux to store the minimal possible state.
-- Selectors can be **memoized**, thus recomputed only if one of its arguments changes.
-- Selectors are **composable**, they can be used as input to other selectors.
+Selectors are **functions** that receives the Redux state as argument and compute **derived data** from it.
+
+They help you decouple the rest of the app from the shape of the state. In its simplest (dumbest) form:
+
+```javascript
+const getViewState = state => state;
+```
+
+- They enable Redux to store the minimal possible state, without data duplication.
+- They can be **memoized**, thus recomputed only if one of its arguments changes.
+- They are **composable**, they can be used as input to other selectors.
 
 ```javascript
 const getGroupsById = (state, ids) => ids.map(id => state.groups[id]);
@@ -464,7 +472,7 @@ const getUsersById = (state, ids) => ids.map(id => ({
 }));
 ```
 
-Check the [reselect](https://github.com/reduxjs/reselect) library.
+[reselect](https://github.com/reduxjs/reselect) is a selector library for Redux .
 
 ### Use higher order reducers (reducer enhancers)
 
@@ -507,7 +515,8 @@ function combineReducers(reducers) {
 - Amazing Redux official docs! -> https://redux.js.org/introduction/getting-started
 - "Getting Started with Redux" videos (courtesy of @dan_abramov himself) -> https://egghead.io/series/getting-started-with-redux
 - Idiomatic Redux (series of really good blog posts by @acemarke, a Redux maintainer) -> https://blog.isquaredsoftware.com/series/idiomatic-redux/
-- Practical Redux (again, by @acemarke) -> https://blog.isquaredsoftware.com/series/practical-redux/
+- Practical Redux (@acemarke) -> https://blog.isquaredsoftware.com/series/practical-redux/
+- React/Redux links (@acemarke) -> https://github.com/markerikson/react-redux-links
 - Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
 - Advanced Redux: Design Patterns and Practices (demo of actions processing patterns) -> https://www.youtube.com/watch?v=5gl3cCB_26M
-- React/Redux links (@acemarke) -> https://github.com/markerikson/react-redux-links
+- 10 Tips for Better Redux Architecture (@_ericelliott) -> https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44
