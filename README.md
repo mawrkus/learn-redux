@@ -460,6 +460,7 @@ const getViewState = state => state;
 ```
 
 - They enable Redux to store the minimal possible state, without data duplication.
+- They reduce the complexity of your reducers and components.
 - They can be **memoized**, thus recomputed only if one of its arguments changes.
 - They are **composable**, they can be used as input to other selectors.
 
