@@ -14,15 +14,27 @@ const { reactionsActionCreators, reactionsReducer } = require('./reactions');
 const { commentsActionCreators, commentsReducer } = require('./comments');
 const { historyActionCreators, historyEnhancer } = require('./history');
 
-const reducer = historyEnhancer(combineReducers({
+const reducer = combineReducers({
   reactions: reactionsReducer,
   comments: commentsReducer,
-}));
+});
+
+const logEnhancer = (r) => {
+  return (state, action) => {
+    const time = process.hrtime();
+    const newState = r(state, action);
+    const diff = process.hrtime(time);
+    console.log(`Reducer took ${diff[0] * 1e9 + diff[1]} nanoseconds`);
+    return newState;
+  };
+};
+
+const enhancedReducer = logEnhancer(historyEnhancer(reducer));
 
 loggerMiddleware.pretty = true;
 
 const store = createStore(
-  reducer,
+  enhancedReducer,
   applyMiddleware(
     // Order IS important
     reduxThunkMiddleware,

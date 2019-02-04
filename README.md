@@ -504,6 +504,7 @@ function combineReducers(reducers) {
 
 **Some usages:**
 
+- benchmarking reducers
 - undo/redo/clear history
 - ...
 
