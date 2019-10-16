@@ -522,3 +522,4 @@ function combineReducers(reducers) {
 - Practical Advanced Redux video (live coding demos of middleware) -> https://www.youtube.com/watch?v=Gjiu7Lgdg3s
 - Advanced Redux: Design Patterns and Practices (demo of actions processing patterns) -> https://www.youtube.com/watch?v=5gl3cCB_26M
 - 10 Tips for Better Redux Architecture (@_ericelliott) -> https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44
+- Reasons to learn Redux as a JavaScript Developer -> https://www.robinwieruch.de/redux-javascript
