@@ -18,7 +18,7 @@
     "demos": "yarn run demo:1 && yarn run demo:2 && yarn run demo:3 && yarn run demo:4 && yarn run demo:5 && yarn run demo:6 && yarn run demo:7 && yarn run demo:8 && yarn run demo:9"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.8.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
